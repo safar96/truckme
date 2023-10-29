@@ -19,6 +19,8 @@ dependencies:
   provider:
   http:
   jwt_decoder:
+  flutter_multi_formatter:
+  sms_autofill: ^2.3.0
 
 dev_dependencies:
   flutter_test:
