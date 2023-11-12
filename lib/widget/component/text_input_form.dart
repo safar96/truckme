@@ -54,7 +54,8 @@ class TextInputForm extends StatelessWidget {
                   Radius.circular(15),
                 ),
                 borderSide: BorderSide(
-                  color: Colors.transparent,
+                  width: 1.0,
+                  color: Color(0xFFD5DDE0),
                 ),
               ),
               focusedBorder: const OutlineInputBorder(
@@ -62,7 +63,8 @@ class TextInputForm extends StatelessWidget {
                   Radius.circular(15),
                 ),
                 borderSide: BorderSide(
-                  color: Colors.transparent,
+                  width: 1.0,
+                  color: Color(0xFFD5DDE0),
                 ),
               ),
               border: const OutlineInputBorder(
@@ -70,7 +72,8 @@ class TextInputForm extends StatelessWidget {
                   Radius.circular(15),
                 ),
                 borderSide: BorderSide(
-                  color: Colors.transparent,
+                  width: 1.0,
+                  color: Color(0xFFD5DDE0),
                 ),
               ),
               alignLabelWithHint: true,

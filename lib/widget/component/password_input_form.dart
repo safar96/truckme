@@ -27,7 +27,7 @@ class PasswordInputForm extends StatefulWidget {
 }
 
 class _PasswordInputFormState extends State<PasswordInputForm> {
-  bool _isNotVisiable = true;
+  bool _isNotVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -51,18 +51,18 @@ class _PasswordInputFormState extends State<PasswordInputForm> {
           height: widget.inputHeight,
           width: widget.inputWidth,
           child: TextFormField(
-            obscureText: _isNotVisiable,
+            obscureText: _isNotVisible,
             controller: widget.controller,
             keyboardType: widget.inputType,
             decoration: InputDecoration(
               suffixIcon: IconButton(
                 icon: Icon(
-                  _isNotVisiable ? Icons.visibility : Icons.visibility_off,
+                  _isNotVisible ? Icons.visibility : Icons.visibility_off,
                   color: const Color(0xFF97ADB6)
                 ),
                 onPressed: () {
                   setState(() {
-                    _isNotVisiable = !_isNotVisiable;
+                    _isNotVisible = !_isNotVisible;
                   });
                 },
               ),
