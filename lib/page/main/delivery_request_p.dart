@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:truckme/widget/component/custom_button.dart';
 import 'package:truckme/widget/component/date_input_form.dart';
-
 import '../../core/app_data/constants.dart';
 import '../../core/component/size_config.dart';
 import '../../widget/component/clock_input_form.dart';
