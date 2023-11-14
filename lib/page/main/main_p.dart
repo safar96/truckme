@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:truckme/core/app_data/constants.dart';
-import 'package:truckme/widget/component/custom_button.dart';
+import 'package:truckme/page/drawer/drawer_p.dart';
 import 'package:truckme/widget/component/direction_card.dart';
 import 'package:truckme/widget/component/out_button.dart';
 import 'package:truckme/widget/component/svg_button.dart';
@@ -16,12 +16,14 @@ class MainP extends StatefulWidget {
 }
 
 class _MainPState extends State<MainP> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _selectedBtn = 1;
 
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Constants.backgroundColor,
       body: SizedBox(
         height: getConfigFullHeight(),
@@ -56,7 +58,10 @@ class _MainPState extends State<MainP> {
                           imageUrl: "assets/icons/drawer.svg",
                           height: 75,
                           width: 75,
-                          onTap: () {},
+                          onTap: () {
+                             print("drawer tapped");
+                            _scaffoldKey.currentState?.openDrawer();
+                          },
                         ),
                       ),
                       SizedBox(
@@ -182,6 +187,7 @@ class _MainPState extends State<MainP> {
           ],
         ),
       ),
+      drawer: const DrawerP(),
     );
   }
 }
