@@ -1,13 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:truckme/page/auth/language_p.dart';
 import 'package:truckme/page/auth/login_p.dart';
 import 'package:truckme/page/auth/registration_p.dart';
-import 'package:truckme/page/auth/sms_confirm_p.dart';
-import 'package:truckme/page/auth/splash_p.dart';
-import 'package:truckme/page/main/delivery_request_p.dart';
-import 'package:truckme/page/main/main_p.dart';
+import 'package:truckme/page/drawer/travel_history_p.dart';
 
 import 'core/language/language_selection.dart';
 
@@ -46,7 +41,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MainP(),
+      home:  TravelHistoryP(),
       routes: {
         // "/first": (BuildContext context) => const FirstPage(),
         "/login": (BuildContext context) => const LoginP(),

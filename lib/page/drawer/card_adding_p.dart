@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:truckme/widget/component/back_button_custom.dart';
 
 import '../../core/app_data/constants.dart';
 import '../../core/component/size_config.dart';
@@ -11,7 +12,7 @@ class CardAddingP extends StatelessWidget {
   final TextEditingController _vCardNumer = TextEditingController();
   final TextEditingController _vCardOwner = TextEditingController();
   final TextEditingController _vExpiredDate1 = TextEditingController();
-  final TextEditingController _vExpiredDate2 = TextEditingController();
+  // final TextEditingController _vExpiredDate2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +20,11 @@ class CardAddingP extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading:Container(
-          padding:const EdgeInsets.fromLTRB(20,5,0,5),
-          child: RawMaterialButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            elevation: 3.0,
-            fillColor: Colors.white,
-            padding: const EdgeInsets.all(12),
-            shape:const  CircleBorder(),
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 22,
-            ),
+        leading: Container(
+          margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+          child: BackButtonCustom(
+            height: getConfigHeight(0.05),
+            width: getConfigWidth(0.15),
           ),
         ),
         centerTitle: true,
@@ -117,29 +108,29 @@ class CardAddingP extends StatelessWidget {
                       children: [
                         TextInputForm(
                           titleHeight: getConfigHeight(0.05),
-                          titleWidth: getConfigWidth(0.4),
+                          titleWidth: getConfigWidth(0.8),
                           title: "Amal qilish muddati".toUpperCase(),
                           inputHeight: getConfigHeight(0.06),
-                          inputWidth: getConfigWidth(0.4),
+                          inputWidth: getConfigWidth(0.8),
                           placeholder: "",
                           controller: _vExpiredDate1,
                           inputType: TextInputType.number,
                         ),
-                        TextInputForm(
-                          titleHeight: getConfigHeight(0.05),
-                          titleWidth: getConfigWidth(0.35),
-                          title: "".toUpperCase(),
-                          inputHeight: getConfigHeight(0.06),
-                          inputWidth: getConfigWidth(0.35),
-                          placeholder: "",
-                          controller: _vExpiredDate2,
-                          inputType: TextInputType.number,
-                        ),
+                        // TextInputForm(
+                        //   titleHeight: getConfigHeight(0.05),
+                        //   titleWidth: getConfigWidth(0.35),
+                        //   title: "".toUpperCase(),
+                        //   inputHeight: getConfigHeight(0.06),
+                        //   inputWidth: getConfigWidth(0.35),
+                        //   placeholder: "",
+                        //   controller: _vExpiredDate2,
+                        //   inputType: TextInputType.number,
+                        // ),
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: getConfigHeight(0.4),
+                    height: getConfigHeight(0.5),
                   ),
                   SizedBox(
                     height: getConfigHeight(0.07),

@@ -5,6 +5,7 @@ import 'package:truckme/widget/component/language_card.dart';
 import 'package:truckme/widget/component/work_type_card.dart';
 
 import '../../model/card/card_list.dart';
+import '../../widget/component/back_button_custom.dart';
 import '../../widget/component/card_with_right.dart';
 
 class PaymentP extends StatefulWidget {
@@ -21,9 +22,8 @@ class _PaymentPState extends State<PaymentP> {
     CardList(account: "****8295", card_type: "humo"),
     CardList(account: "****3704", card_type: "uzcard"),
     CardList(account: "****4584", card_type: "humo"),
-    CardList(account: "****4584", card_type: "uzcard"),
     CardList(account: "****4584", card_type: "humo"),
-    CardList(account: "****4584", card_type: "uzcard"),
+    CardList(account: "****4584", card_type: "humo"),
   ];
 
   final List<CardList> _others = [
@@ -38,33 +38,10 @@ class _PaymentPState extends State<PaymentP> {
       appBar: AppBar(
         centerTitle: true,
         leading: Container(
-          height: getConfigHeight(0.05),
-          width: getConfigWidth(0.15),
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 0),
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 6.0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 20,
-              ),
-            ),
+          margin:const EdgeInsets.fromLTRB(20, 0, 0, 0),
+          child: BackButtonCustom(
+            height: getConfigHeight(0.05),
+            width: getConfigWidth(0.15),
           ),
         ),
         title: const Text(
@@ -79,80 +56,119 @@ class _PaymentPState extends State<PaymentP> {
         child: Column(
           children: [
             Container(
-              color: Colors.brown,
-              height: getConfigHeight(0.1) * _cardList.length,
+              height: getConfigHeight(0.1) * _cardList.length+getConfigHeight(0.1),
               alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 25,
+                vertical: 10,
+              ),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Bank kartalari',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                    Container(
+                      child:const Text(
+                        'Bank kartalari',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
-
-                    Expanded(
-                      child: ListView.builder(
-                        padding: EdgeInsets.symmetric(),
-                          itemCount: _cardList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return LanguageCard(
-                                height: getConfigHeight(0.07),
-                                width: getConfigWidth(0.9),
-                                imageUrl: _cardList[index].card_type == "humo"
-                                    ? "assets/images/humo.png"
-                                    : "assets/images/uzcard.png",
-                                title: _cardList[index].account,
-                                isSelected: true,
-                                onTap: () {},
-                            );
-                          },
-                        ),
-                    ),
-
-                    CardWithRight(
-                      imageUrl: "assets/images/humo.png",
-                      height: getConfigHeight(0.07),
-                      width: getConfigWidth(0.9),
-                      title: "Karta qo'shish",
-                      onTap: () {},
+                    for(CardList card in _cardList)
+                      _cardWidget(card),
+                    Container(
+                      child: CardWithRight(
+                        imageUrl: "assets/images/humo.png",
+                        height: getConfigHeight(0.07),
+                        width: getConfigWidth(0.8),
+                        title: "Karta qo'shish",
+                        onTap: () {},
+                      ),
                     ),
                   ]),
             ),
             const SizedBox(
-              height: 12,
+              height: 25,
             ),
             Container(
-              color: Colors.brown,
-              height: getConfigHeight(0.2) * _others.length,
+              height: getConfigHeight(0.2) * _others.length+getConfigHeight(0.1),
               alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 25,
+                vertical: 10,
+              ),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Boshqa usullar',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                    Container(
+                      margin:const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 8,
+                      ),
+                      child: const Text(
+                        'Boshqa usullar',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
-                    // const SizedBox(height: 8,),
-                    for (var card in _others)
-                      LanguageCard(
-                          height: getConfigHeight(0.07),
-                          width: getConfigWidth(0.9),
-                          imageUrl: "assets/images/humo.png",
-                          title: card.account,
-                          isSelected: true,
-                          onTap: () {}),
-
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: _others.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              LanguageCard(
+                                height: getConfigHeight(0.07),
+                                width: getConfigWidth(0.8),
+                                imageUrl: "assets/images/ic_cash.png",
+                                title: _others[index].account,
+                                isSelected: true,
+                                onTap: () {},
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
                     const SizedBox(
                       height: 8,
                     ),
@@ -163,4 +179,27 @@ class _PaymentPState extends State<PaymentP> {
       ),
     );
   }
+
+
+ Widget _cardWidget(CardList cardList){
+    return
+      Column(
+        children: [
+          LanguageCard(
+            height: getConfigHeight(0.07),
+            width: getConfigWidth(0.8),
+            imageUrl: cardList.card_type == "humo"
+                ? "assets/images/humo.png"
+                : "assets/images/uzcard.png",
+            title: cardList.account,
+            isSelected: true,
+            onTap: () {},
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+        ],
+      );
+    }
+
 }
