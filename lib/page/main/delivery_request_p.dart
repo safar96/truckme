@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:truckme/page/main/map_p.dart';
 import 'package:truckme/widget/component/custom_button.dart';
 import 'package:truckme/widget/component/date_input_form.dart';
 import '../../core/app_data/constants.dart';
@@ -217,12 +218,12 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                     radius: 15,
                     colorButton: Constants.primaryColor,
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const SmsConfirmP(),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MapP(),
+                        ),
+                      );
                       // _register();
                     },
                   ),

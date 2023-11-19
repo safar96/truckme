@@ -20,9 +20,17 @@ dependencies:
   http:
   jwt_decoder:
   flutter_multi_formatter:
-  sms_autofill: ^2.3.0
-  flutter_svg: ^1.1.6
-  flutter_svg_provider: ^1.0.3
+  sms_autofill:
+  flutter_svg:
+  flutter_svg_provider:
+  google_maps_flutter:
+  geolocator:
+  flutter_polyline_points:
+  map_location_picker:
+#  flutter_google_places:
+  google_maps_webservice:
+  geocoding: ^2.1.1
+
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +44,4 @@ flutter:
     - assets/translations/
     - assets/images/
     - assets/icons/
+    - assets/map_style.json

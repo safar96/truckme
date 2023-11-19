@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:truckme/core/app_data/constants.dart';
 import 'package:truckme/page/drawer/drawer_p.dart';
+import 'package:truckme/page/main/delivery_request_p.dart';
 import 'package:truckme/widget/component/direction_card.dart';
 import 'package:truckme/widget/component/out_button.dart';
 import 'package:truckme/widget/component/svg_button.dart';
@@ -9,7 +10,7 @@ import 'package:truckme/widget/component/work_type_card.dart';
 import '../../core/component/size_config.dart';
 
 class MainP extends StatefulWidget {
-  const MainP({super.key});
+  const MainP();
 
   @override
   State<MainP> createState() => _MainPState();
@@ -144,7 +145,14 @@ class _MainPState extends State<MainP> {
                         width: getConfigWidth(0.4),
                         imageUrl: "assets/images/car.png",
                         title: "Yuk tashish",
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DeliveryRequestP(),
+                            ),
+                          );
+                        },
                       ),
                       DirectionCard(
                         height: getConfigHeight(0.13),

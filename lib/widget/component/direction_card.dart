@@ -25,6 +25,7 @@ class _DirectionCardState extends State<DirectionCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.onTap,
+      behavior: HitTestBehavior.translucent,
       child: Container(
         height: widget.height,
         width: widget.width,

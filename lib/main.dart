@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:truckme/page/auth/login_p.dart';
 import 'package:truckme/page/auth/registration_p.dart';
 import 'package:truckme/page/drawer/travel_history_p.dart';
+import 'package:truckme/page/main/main_p.dart';
+import 'package:truckme/page/main/map_p.dart';
+import 'package:truckme/page/main/request_seccess_p.dart';
 
 import 'core/language/language_selection.dart';
 
@@ -41,7 +44,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  TravelHistoryP(),
+      home:  const MainP(),
       routes: {
         // "/first": (BuildContext context) => const FirstPage(),
         "/login": (BuildContext context) => const LoginP(),
