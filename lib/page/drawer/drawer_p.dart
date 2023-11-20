@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:truckme/core/app_data/constants.dart';
 import 'package:truckme/core/component/size_config.dart';
+import 'package:truckme/page/drawer/payment_p.dart';
+import 'package:truckme/page/drawer/support_p.dart';
+import 'package:truckme/page/drawer/travel_history_p.dart';
 
 class DrawerP extends StatefulWidget {
   const DrawerP({super.key});
@@ -105,7 +108,9 @@ class _DrawerPState extends State<DrawerP> {
                   // selected: _selectedIndex == 0,
                   onTap: () {
                     _onItemTapped(0);
-                    Navigator.pop(context);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => TravelHistoryP(),
+                    ));
                   },
                 ),
                 Divider(
@@ -125,7 +130,9 @@ class _DrawerPState extends State<DrawerP> {
                   selected: _selectedIndex == 1,
                   onTap: () {
                     _onItemTapped(1);
-                    Navigator.pop(context);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PaymentP(),
+                    ));
                   },
                 ),
                 Divider(
@@ -145,7 +152,9 @@ class _DrawerPState extends State<DrawerP> {
                   selected: _selectedIndex == 2,
                   onTap: () {
                     _onItemTapped(2);
-                    Navigator.pop(context);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SupportP(),
+                    ));
                   },
                 ),
                 Divider(

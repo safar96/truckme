@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:truckme/core/component/size_config.dart';
 import 'package:truckme/widget/component/language_card.dart';
-import 'package:truckme/widget/component/work_type_card.dart';
 
 import '../../model/card/card_list.dart';
 import '../../widget/component/back_button_custom.dart';
 import '../../widget/component/card_with_right.dart';
 
 class PaymentP extends StatefulWidget {
-  const PaymentP({super.key, required this.cardList});
-
-  final List<CardList> cardList;
+  const PaymentP({super.key});
 
   @override
   State<PaymentP> createState() => _PaymentPState();

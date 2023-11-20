@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:truckme/core/component/size_config.dart';
-
 import '../../model/history/travel_history.dart';
 
 class HistoryCard extends StatefulWidget {
@@ -17,7 +16,8 @@ class _HistoryCardState extends State<HistoryCard> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Container(
-      padding: EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       height: getConfigHeight(0.2),
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -63,6 +63,7 @@ class _HistoryCardState extends State<HistoryCard> {
             children: [
               SizedBox(
                 width: getConfigWidth(0.1),
+                height: getConfigHeight(0.1),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,13 +89,16 @@ class _HistoryCardState extends State<HistoryCard> {
               const SizedBox(
                 width: 10,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(widget.travelHistory.fromAdress),
-                  Text(widget.travelHistory.toAdress),
-                ],
+              SizedBox(
+                height: getConfigHeight(0.1),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.travelHistory.fromAdress),
+                    Text(widget.travelHistory.toAdress),
+                  ],
+                ),
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:truckme/core/app_data/constants.dart';
 import 'package:truckme/model/history/travel_history.dart';
 import 'package:truckme/widget/component/history_card.dart';
 
@@ -28,9 +29,13 @@ class TravelHistoryP extends StatefulWidget {
 }
 
 class _TravelHistoryPState extends State<TravelHistoryP> {
+
+
+
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
+
     return MaterialApp(
       home: DefaultTabController(
         length: 4,
@@ -38,38 +43,53 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             leading: Container(
-              margin:const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: BackButtonCustom(
                 height: getConfigHeight(0.05),
                 width: getConfigWidth(0.15),
               ),
             ),
-            bottom: const TabBar(
+            bottom: TabBar(
               automaticIndicatorColorAdjustment: true,
-              indicatorColor: Colors.grey,
-              tabs: [
+              indicatorColor: Constants.primaryColor,
+              unselectedLabelColor: Colors.grey,
+              labelColor: Constants.primaryColor,
+              tabs: const [
                 Tab(
                   child: Text(
                     'Barchasi',
-                    style: TextStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
+                    // style: TextStyle(color: Colors.cyan),
                   ),
                 ),
                 Tab(
                   child: Text(
                     'Faol',
-                    style: TextStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
+                    // style: TextStyle(color: Colors.grey),
                   ),
                 ),
                 Tab(
                   child: Text(
                     'Bekor qilingan',
-                    style: TextStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
+                    // style: TextStyle(color: Colors.grey),
                   ),
                 ),
                 Tab(
+                  // child: Container(
+                  //   decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(15),
+                  //       border: Border.all(color: Colors.redAccent, width: 1)),
+                  //   child: Align(
+                  //     alignment: Alignment.center,
+                  //     child: Text("APPS"),
+                  //   ),
+                  // ),
                   child: Text(
                     'Tugallangan',
-                    style: TextStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
+                    // style: TextStyle(color: Colors.grey),
                   ),
                 ),
               ],
@@ -86,94 +106,93 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
           ),
           body: SafeArea(
             child: TabBarView(
-             children: [
-               Container(
-                 padding: EdgeInsets.all(16),
-                 child: SingleChildScrollView(
-                   child: Column(
-                     children: [
-                       for (TravelHistory item in widget.list)
-                         Container(
-                             margin: EdgeInsets.symmetric(vertical: 8),
-                             child: HistoryCard(
-                                 travelHistory: TravelHistory(
-                                     item.isActive,
-                                     item.date,
-                                     item.fromTime,
-                                     item.toTime,
-                                     item.fromAdress,
-                                     item.toAdress))),
-                     ],
-                   ),
-                 ),
-               ),
-
-               Container(
-                 padding: EdgeInsets.all(16),
-                 child: SingleChildScrollView(
-                   child: Column(
-                     children: [
-                       for (TravelHistory item in widget.list.where((element) => element.isActive))
-                         Container(
-                             margin: EdgeInsets.symmetric(vertical: 8),
-                             child: HistoryCard(
-                                 travelHistory: TravelHistory(
-                                     item.isActive,
-                                     item.date,
-                                     item.fromTime,
-                                     item.toTime,
-                                     item.fromAdress,
-                                     item.toAdress))),
-                     ],
-                   ),
-                 ),
-               ),
-
-               Container(
-                 padding: EdgeInsets.all(16),
-                 child: SingleChildScrollView(
-                   child: Column(
-                     children: [
-                       for (TravelHistory item in widget.list.where((element) => !element.isActive))
-                         Container(
-                             margin: EdgeInsets.symmetric(vertical: 8),
-                             child: HistoryCard(
-                                 travelHistory: TravelHistory(
-                                     item.isActive,
-                                     item.date,
-                                     item.fromTime,
-                                     item.toTime,
-                                     item.fromAdress,
-                                     item.toAdress),
-                             ),
-                        ),
-                     ],
-                   ),
-                 ),
-               ),
-
-
-               Container(
-                 padding: EdgeInsets.all(16),
-                 child: SingleChildScrollView(
-                   child: Column(
-                     children: [
-                       for (TravelHistory item in widget.list)
-                         Container(
-                             margin: EdgeInsets.symmetric(vertical: 8),
-                             child: HistoryCard(
-                                 travelHistory: TravelHistory(
-                                     item.isActive,
-                                     item.date,
-                                     item.fromTime,
-                                     item.toTime,
-                                     item.fromAdress,
-                                     item.toAdress))),
-                     ],
-                   ),
-                 ),
-               ),
-             ],
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 8),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (TravelHistory item in widget.list)
+                          Container(
+                            child: HistoryCard(
+                              travelHistory: TravelHistory(
+                                  item.isActive,
+                                  item.date,
+                                  item.fromTime,
+                                  item.toTime,
+                                  item.fromAdress,
+                                  item.toAdress),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (TravelHistory item
+                            in widget.list.where((element) => element.isActive))
+                          Container(
+                              margin: EdgeInsets.symmetric(vertical: 8),
+                              child: HistoryCard(
+                                  travelHistory: TravelHistory(
+                                      item.isActive,
+                                      item.date,
+                                      item.fromTime,
+                                      item.toTime,
+                                      item.fromAdress,
+                                      item.toAdress))),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (TravelHistory item in widget.list
+                            .where((element) => !element.isActive))
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 8),
+                            child: HistoryCard(
+                              travelHistory: TravelHistory(
+                                  item.isActive,
+                                  item.date,
+                                  item.fromTime,
+                                  item.toTime,
+                                  item.fromAdress,
+                                  item.toAdress),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (TravelHistory item in widget.list)
+                          Container(
+                              margin: EdgeInsets.symmetric(vertical: 8),
+                              child: HistoryCard(
+                                  travelHistory: TravelHistory(
+                                      item.isActive,
+                                      item.date,
+                                      item.fromTime,
+                                      item.toTime,
+                                      item.fromAdress,
+                                      item.toAdress))),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
