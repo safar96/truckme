@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:truckme/page/auth/login_p.dart';
 import 'package:truckme/page/auth/registration_p.dart';
+import 'package:truckme/page/drawer/travel_details_p.dart';
 import 'package:truckme/page/drawer/travel_history_p.dart';
 import 'package:truckme/page/main/main_p.dart';
 import 'package:truckme/page/main/map_p.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  const MainP(),
+      home:  const TravelDetailP(),
       routes: {
         // "/first": (BuildContext context) => const FirstPage(),
         "/login": (BuildContext context) => const LoginP(),
