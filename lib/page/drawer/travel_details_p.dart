@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:truckme/page/drawer/driver_detail_p.dart';
 import 'package:truckme/widget/component/back_button_custom.dart';
 
 import '../../core/app_data/constants.dart';
@@ -50,10 +51,9 @@ class _TravelDetailPState extends State<TravelDetailP> {
                         margin: EdgeInsets.fromLTRB(getConfigWidth(0.07),
                             getConfigHeight(0.22), getConfigWidth(0.07), 0),
                         decoration: BoxDecoration(
-                            color: Colors.white,
-
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15)),
+                          border: Border.all(color: Colors.grey.shade300),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -61,8 +61,9 @@ class _TravelDetailPState extends State<TravelDetailP> {
                             SizedBox(
                               width: getConfigWidth(0.1),
                               height: getConfigHeight(0.1),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              child: const Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -70,7 +71,7 @@ class _TravelDetailPState extends State<TravelDetailP> {
                                     style: const TextStyle(color: Colors.grey),
                                   ),
                                   Text(
-                                   '11:50',
+                                    '11:50',
                                     style: const TextStyle(color: Colors.grey),
                                   ),
                                 ],
@@ -88,12 +89,13 @@ class _TravelDetailPState extends State<TravelDetailP> {
                             ),
                             SizedBox(
                               height: getConfigHeight(0.1),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              child: const Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('widget.travelHistory.fromAdress'),
-                                  Text('widget.travelHistory.toAdress'),
+                                  Text('Zulfiyaxonim ko’chasi, 5A'),
+                                  Text('Shota Rustaveli ko’chasi, 77A'),
                                 ],
                               ),
                             ),
@@ -109,12 +111,12 @@ class _TravelDetailPState extends State<TravelDetailP> {
           Container(
             height: getConfigHeight(0.52),
             color: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 30),
+            padding:const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
+                const Text(
                   'Haydovchi',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -122,57 +124,90 @@ class _TravelDetailPState extends State<TravelDetailP> {
                   ),
                 ),
                 Container(
-                  height: getConfigHeight(0.15),
-                  decoration: BoxDecoration(
-                    color: Colors.cyan,
-
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(15)),
+                  height: getConfigHeight(0.12),
+                  decoration:const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 2,
+                        blurRadius: 2,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
                   ),
                   child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        child: CircleAvatar(
-                          backgroundImage:
-                          const AssetImage("assets/images/photo_driver.png"),
-                          radius: getConfigHeight(0.05),
-                        ),
+                      SizedBox(width: 16,),
+                      CircleAvatar(
+                          backgroundImage: const AssetImage(
+                              "assets/images/photo_driver.png"),
+                          radius: getConfigHeight(0.04),
                       ),
                       SizedBox(
                         width: getConfigWidth(0.05),
                       ),
-                      const Column(
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Profile',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 24,
+                              fontSize: 20,
                             ),
                           ),
                           Text(
                             'Oq Izusu',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                             ),
                           ),
                           Row(
                             children: [
-
+                              SizedBox(
+                                width: 12,
+                                height: 12,
+                                child: Image.asset("assets/images/Star1.png",fit: BoxFit.cover),
+                              ),
+                              SizedBox(width: 4,),
                               Text(
                                 '4.8',
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 16,
                                 ),
                               ),
                             ],
                           )
                         ],
-                      )
+                      ),
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const DriverDetailP(),
+                          ));
+                        },
+                        child: Container(
+                          width: 50,
+                          margin: EdgeInsets.only(left: getConfigWidth(0.30)),
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "assets/images/right.png",
+                              ),
+                              scale: 1.8,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                Text(
+               const Text(
                   'To\'lov',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -181,18 +216,44 @@ class _TravelDetailPState extends State<TravelDetailP> {
                 ),
                 Container(
                   height: getConfigHeight(0.06),
-                  decoration: BoxDecoration(
-                    color: Colors.cyan,
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(15)),
+                  decoration:const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 2,
+                        blurRadius: 2,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      SizedBox(
+                        width: getConfigWidth(0.02),
+                      ),
                       Image.asset("assets/images/cards.png"),
                       Text('*****8952'),
-                      SizedBox(width: 50,),
-                      Text('9000'),
-                      Text('so\'m'),
+                      SizedBox(
+                        width: getConfigWidth(0.3),
+                      ),
+                      const Text(
+                        '9000',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Text(
+                        "so'm",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -205,7 +266,9 @@ class _TravelDetailPState extends State<TravelDetailP> {
                     textColor: Colors.white,
                     radius: 15,
                     colorButton: Constants.primaryColor,
-                    onTap: () {},
+                    onTap: () {
+                      _settingModalBottomSheet(context);
+                    },
                   ),
                 ),
               ],
@@ -215,4 +278,28 @@ class _TravelDetailPState extends State<TravelDetailP> {
       ),
     );
   }
+}
+
+void _settingModalBottomSheet(context){
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc){
+          return Container(
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                    leading: new Icon(Icons.music_note),
+                    title: new Text('Music'),
+                    onTap: () => {}
+                ),
+                new ListTile(
+                  leading: new Icon(Icons.videocam),
+                  title: new Text('Video'),
+                  onTap: () => {},
+                ),
+              ],
+            ),
+          );
+        }
+    );
 }

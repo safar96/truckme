@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:truckme/core/app_data/constants.dart';
 import 'package:truckme/model/history/travel_history.dart';
+import 'package:truckme/page/drawer/drawer_p.dart';
+import 'package:truckme/page/drawer/travel_details_p.dart';
 import 'package:truckme/widget/component/history_card.dart';
 
 import '../../core/component/size_config.dart';
@@ -29,9 +31,7 @@ class TravelHistoryP extends StatefulWidget {
 }
 
 class _TravelHistoryPState extends State<TravelHistoryP> {
-
-
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -40,14 +40,42 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
       home: DefaultTabController(
         length: 4,
         child: Scaffold(
+          key: _scaffoldKey,
           appBar: AppBar(
             backgroundColor: Colors.white,
             leading: Container(
               margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-              child: BackButtonCustom(
-                height: getConfigHeight(0.05),
-                width: getConfigWidth(0.15),
-              ),
+              child: Container(
+                  height: getConfigHeight(0.05),
+                  width: getConfigWidth(0.15),
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 6.0),
+                    child: IconButton(
+                      onPressed: () {
+                        print("back tapped");
+                        _scaffoldKey.currentState?.openDrawer();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.black,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                ),
             ),
             bottom: TabBar(
               automaticIndicatorColorAdjustment: true,
@@ -89,7 +117,9 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
                   child: Text(
                     'Tugallangan',
                     textAlign: TextAlign.center,
-                    // style: TextStyle(color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
                   ),
                 ),
               ],
@@ -113,15 +143,22 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
                     child: Column(
                       children: [
                         for (TravelHistory item in widget.list)
-                          Container(
-                            child: HistoryCard(
-                              travelHistory: TravelHistory(
-                                  item.isActive,
-                                  item.date,
-                                  item.fromTime,
-                                  item.toTime,
-                                  item.fromAdress,
-                                  item.toAdress),
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const TravelDetailP(),
+                              ));
+                            },
+                            child: Container(
+                              child: HistoryCard(
+                                travelHistory: TravelHistory(
+                                    item.isActive,
+                                    item.date,
+                                    item.fromTime,
+                                    item.toTime,
+                                    item.fromAdress,
+                                    item.toAdress),
+                              ),
                             ),
                           ),
                       ],
@@ -135,16 +172,23 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
                       children: [
                         for (TravelHistory item
                             in widget.list.where((element) => element.isActive))
-                          Container(
-                              margin: EdgeInsets.symmetric(vertical: 8),
-                              child: HistoryCard(
-                                  travelHistory: TravelHistory(
-                                      item.isActive,
-                                      item.date,
-                                      item.fromTime,
-                                      item.toTime,
-                                      item.fromAdress,
-                                      item.toAdress))),
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const TravelDetailP(),
+                              ));
+                            },
+                            child: Container(
+                                margin: EdgeInsets.symmetric(vertical: 8),
+                                child: HistoryCard(
+                                    travelHistory: TravelHistory(
+                                        item.isActive,
+                                        item.date,
+                                        item.fromTime,
+                                        item.toTime,
+                                        item.fromAdress,
+                                        item.toAdress))),
+                          ),
                       ],
                     ),
                   ),
@@ -156,16 +200,23 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
                       children: [
                         for (TravelHistory item in widget.list
                             .where((element) => !element.isActive))
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 8),
-                            child: HistoryCard(
-                              travelHistory: TravelHistory(
-                                  item.isActive,
-                                  item.date,
-                                  item.fromTime,
-                                  item.toTime,
-                                  item.fromAdress,
-                                  item.toAdress),
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const TravelDetailP(),
+                              ));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(vertical: 8),
+                              child: HistoryCard(
+                                travelHistory: TravelHistory(
+                                    item.isActive,
+                                    item.date,
+                                    item.fromTime,
+                                    item.toTime,
+                                    item.fromAdress,
+                                    item.toAdress),
+                              ),
                             ),
                           ),
                       ],
@@ -178,16 +229,23 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
                     child: Column(
                       children: [
                         for (TravelHistory item in widget.list)
-                          Container(
-                              margin: EdgeInsets.symmetric(vertical: 8),
-                              child: HistoryCard(
-                                  travelHistory: TravelHistory(
-                                      item.isActive,
-                                      item.date,
-                                      item.fromTime,
-                                      item.toTime,
-                                      item.fromAdress,
-                                      item.toAdress))),
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const TravelDetailP(),
+                              ));
+                            },
+                            child: Container(
+                                margin: EdgeInsets.symmetric(vertical: 8),
+                                child: HistoryCard(
+                                    travelHistory: TravelHistory(
+                                        item.isActive,
+                                        item.date,
+                                        item.fromTime,
+                                        item.toTime,
+                                        item.fromAdress,
+                                        item.toAdress))),
+                          ),
                       ],
                     ),
                   ),
@@ -195,6 +253,7 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
               ],
             ),
           ),
+          drawer: const  DrawerP(),
         ),
       ),
     );

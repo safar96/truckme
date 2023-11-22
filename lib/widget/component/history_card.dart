@@ -5,7 +5,7 @@ import '../../model/history/travel_history.dart';
 class HistoryCard extends StatefulWidget {
   final TravelHistory travelHistory;
 
-  const HistoryCard({super.key, required this.travelHistory});
+  const HistoryCard({super.key, required this.travelHistory,});
 
   @override
   State<HistoryCard> createState() => _HistoryCardState();

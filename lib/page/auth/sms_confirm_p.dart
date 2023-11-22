@@ -195,7 +195,8 @@ class _SmsConfirmPState extends State<SmsConfirmP> {
                           child: Text(
                             "Kodni tasdiqlang",
                             style: TextStyle(
-                              color: Theme.of(context).textTheme.titleSmall?.color,
+                              color:
+                                  Theme.of(context).textTheme.titleSmall?.color,
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
                             ),

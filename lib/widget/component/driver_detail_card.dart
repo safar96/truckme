@@ -25,7 +25,7 @@ class _DriverDetailCardState extends State<DriverDetailCard> {
       height: getConfigHeight(0.085),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: Colors.grey.shade300),
         borderRadius:const BorderRadius.all(Radius.circular(15)),
       ),
       child: Column(

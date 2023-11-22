@@ -89,7 +89,7 @@ class _DriverDetailPState extends State<DriverDetailP> {
                 height: getConfigHeight(0.3),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border.all(color: Colors.grey),
+                  border: Border.all(color: Colors.grey.shade300),
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                 ),
                 child: const Column(
