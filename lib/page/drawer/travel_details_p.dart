@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:truckme/page/drawer/driver_detail_p.dart';
+import 'package:truckme/page/drawer/travel_bottom_p.dart';
 import 'package:truckme/widget/component/back_button_custom.dart';
+import 'package:truckme/widget/component/text_with_right.dart';
 
 import '../../core/app_data/constants.dart';
 import '../../core/component/size_config.dart';
@@ -284,22 +286,7 @@ void _settingModalBottomSheet(context){
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc){
-          return Container(
-            child: new Wrap(
-              children: <Widget>[
-                new ListTile(
-                    leading: new Icon(Icons.music_note),
-                    title: new Text('Music'),
-                    onTap: () => {}
-                ),
-                new ListTile(
-                  leading: new Icon(Icons.videocam),
-                  title: new Text('Video'),
-                  onTap: () => {},
-                ),
-              ],
-            ),
-          );
+          return TravelBottomP();
         }
     );
 }
