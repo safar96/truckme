@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:truckme/page/main/map_p.dart';
+import 'package:truckme/widget/component/check_box_custom.dart';
 import 'package:truckme/widget/component/custom_button.dart';
 import 'package:truckme/widget/component/date_input_form.dart';
 import '../../core/app_data/constants.dart';
@@ -33,6 +34,7 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
   final TextEditingController _weight = TextEditingController();
   final TextEditingController _count = TextEditingController();
   final TextEditingController _description = TextEditingController();
+  bool _isInTown = true;
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +120,7 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                         inputWidth: getConfigWidth(0.2),
                         placeholder: "",
                         controller: _volume1,
-                        inputType: TextInputType.emailAddress,
+                        inputType: TextInputType.number,
                       ),
                       TextInputForm(
                         titleHeight: getConfigHeight(0.0),
@@ -128,7 +130,7 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                         inputWidth: getConfigWidth(0.2),
                         placeholder: "",
                         controller: _volume2,
-                        inputType: TextInputType.emailAddress,
+                        inputType: TextInputType.number,
                       ),
                       TextInputForm(
                         titleHeight: getConfigHeight(0.0),
@@ -138,7 +140,7 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                         inputWidth: getConfigWidth(0.2),
                         placeholder: "",
                         controller: _volume3,
-                        inputType: TextInputType.emailAddress,
+                        inputType: TextInputType.number,
                       ),
                     ],
                   ),
@@ -203,9 +205,39 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                     titleHeight: getConfigHeight(0.05),
                     titleWidth: getConfigWidth(0.8),
                     title: "tavsifi".toUpperCase(),
-                    inputHeight: getConfigHeight(0.2),
+                    inputHeight: getConfigHeight(0.1),
                     inputWidth: getConfigWidth(0.8),
                     controller: _description,
+                  ),
+                ),
+                SizedBox(
+                  width: getConfigWidth(0.8),
+                  height: getConfigHeight(0.08),
+                  child: Row(
+                    children: [
+                      CheckBoxCustom(
+                        height: getConfigHeight(0.08),
+                        width: getConfigWidth(0.4),
+                        title: "shahar ichida".toUpperCase(),
+                        isSelected: _isInTown,
+                        onTap: (){
+                          setState(() {
+                            _isInTown = true;
+                          });
+                        },
+                      ),
+                      CheckBoxCustom(
+                        height: getConfigHeight(0.08),
+                        width: getConfigWidth(0.4),
+                        title: "shaharlar aro".toUpperCase(),
+                        isSelected: !_isInTown,
+                        onTap: (){
+                          setState(() {
+                            _isInTown = false;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
