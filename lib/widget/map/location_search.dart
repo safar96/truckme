@@ -8,6 +8,7 @@ import 'package:truckme/widget/component/custom_button.dart';
 import '../../core/app_data/constants.dart';
 import '../../core/component/size_config.dart';
 import '../../core/util/map.dart';
+import '../component/current_location_button.dart';
 
 class LocationSearch extends StatefulWidget {
   final Completer<GoogleMapController> mapController;
@@ -15,6 +16,7 @@ class LocationSearch extends StatefulWidget {
   final TextEditingController controller;
   final void Function(LatLng) onTap;
   final void Function() onSelect;
+  final Function() onTapCurrentLocation;
 
   const LocationSearch({
     super.key,
@@ -22,7 +24,7 @@ class LocationSearch extends StatefulWidget {
     required this.currentPosition,
     required this.onTap,
     required this.controller,
-    required this.onSelect,
+    required this.onSelect, required this.onTapCurrentLocation,
   });
 
   @override
@@ -38,38 +40,17 @@ class _LocationSearchState extends State<LocationSearch> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return SizedBox(
-      height: getConfigFullHeight(),
+      height: getConfigHeight(0.9),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Container(
-            height: getConfigHeight(0.05),
-            width: getConfigWidth(0.15),
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 0),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 6.0),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black,
-                  size: 20,
-                ),
-              ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0,right: 20.0),
+            child: CurrentLocationButton(
+              height: 50,
+              width: 50,
+              onTap: widget.onTapCurrentLocation,
             ),
           ),
           Container(

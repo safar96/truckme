@@ -2,11 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:truckme/page/auth/login_p.dart';
 import 'package:truckme/page/auth/registration_p.dart';
+import 'package:truckme/page/auth/splash_p.dart';
 import 'package:truckme/page/drawer/travel_details_p.dart';
 import 'package:truckme/page/drawer/travel_history_p.dart';
+import 'package:truckme/page/main/announcement_p.dart';
 import 'package:truckme/page/main/main_p.dart';
-import 'package:truckme/page/main/map_p.dart';
+import 'package:truckme/page/main/delivery_map_p.dart';
 import 'package:truckme/page/main/request_seccess_p.dart';
+import 'package:truckme/page/main/special_auto_map_p.dart';
+import 'package:truckme/page/main/special_auto_request_p.dart';
 
 import 'core/language/language_selection.dart';
 
@@ -45,7 +49,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  const MainP(),
+      home: const SplashP(),
       routes: {
         // "/first": (BuildContext context) => const FirstPage(),
         "/login": (BuildContext context) => const LoginP(),
@@ -55,3 +59,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+//flutter build apk --split-per-abi

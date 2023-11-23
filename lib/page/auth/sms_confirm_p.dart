@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:truckme/page/main/main_p.dart';
 import '../../core/component/size_config.dart';
 import '../../model/auth/success_message.dart';
 import '../../provider/auth_provider.dart';
@@ -195,8 +196,7 @@ class _SmsConfirmPState extends State<SmsConfirmP> {
                           child: Text(
                             "Kodni tasdiqlang",
                             style: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.titleSmall?.color,
+                              color: Theme.of(context).textTheme.titleSmall?.color,
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
                             ),
@@ -247,13 +247,20 @@ class _SmsConfirmPState extends State<SmsConfirmP> {
                       currentCode: _code,
                       onCodeSubmitted: (code) {},
                       focusNode: _focusNode,
-                      onCodeChanged: (code) {
+                      onCodeChanged: (code) async{
+                        setState(() {
+                          _code = code!;
+                        });
                         if (code!.length == 6) {
                           FocusScope.of(context).requestFocus(FocusNode());
+                          await Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MainP(),
+                            ),
+                            (route) => false,
+                          );
                         }
-                        setState(() {
-                          _code = code;
-                        });
                       },
                     ),
                   ),
