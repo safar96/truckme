@@ -32,6 +32,7 @@ class _PaymentPState extends State<PaymentP> {
     SizeConfig.init(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         centerTitle: true,
         leading: Container(
           margin:const EdgeInsets.fromLTRB(20, 0, 0, 0),

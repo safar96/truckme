@@ -17,6 +17,7 @@ class _DriverDetailPState extends State<DriverDetailP> {
     SizeConfig.init(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: Container(
           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
           child: BackButtonCustom(

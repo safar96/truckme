@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:truckme/core/app_data/constants.dart';
 import 'package:truckme/core/component/size_config.dart';
 import 'package:truckme/page/drawer/payment_p.dart';
+import 'package:truckme/page/drawer/profile_p.dart';
 import 'package:truckme/page/drawer/support_p.dart';
 import 'package:truckme/page/drawer/travel_history_p.dart';
 
@@ -47,6 +48,7 @@ class _DrawerPState extends State<DrawerP> {
                     children: [
                       CircleAvatar(
                         radius: getConfigHeight(0.05),
+                        backgroundColor: Colors.white,
                         backgroundImage:
                             const AssetImage("assets/images/language_logo.png"),
                       ),
@@ -78,7 +80,9 @@ class _DrawerPState extends State<DrawerP> {
                     left: getConfigWidth(0.16),
                     child: InkWell(
                       onTap: () {
-                        print('tapped edit');
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProfileP(),
+                        ));
                       },
                       child: CircleAvatar(
                         backgroundColor: Constants.secondaryColor,

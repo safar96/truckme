@@ -21,6 +21,7 @@ class _TravelDetailPState extends State<TravelDetailP> {
     SizeConfig.init(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         centerTitle: true,
         leading: Container(
           margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
@@ -29,9 +30,10 @@ class _TravelDetailPState extends State<TravelDetailP> {
             width: getConfigWidth(0.15),
           ),
         ),
-        title: const Text(
+        title:  Text(
           "Haydash tafsilotlari",
           style: TextStyle(
+            color: Theme.of(context).textTheme.titleSmall?.color,
             fontWeight: FontWeight.bold,
             fontSize: 24,
           ),
@@ -156,14 +158,14 @@ class _TravelDetailPState extends State<TravelDetailP> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Profile',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Oq Izusu',
                             style: TextStyle(
                               fontSize: 16,
@@ -177,7 +179,7 @@ class _TravelDetailPState extends State<TravelDetailP> {
                                 child: Image.asset("assets/images/Star1.png",fit: BoxFit.cover),
                               ),
                               SizedBox(width: 4,),
-                              Text(
+                              const  Text(
                                 '4.8',
                                 style: TextStyle(
                                   fontSize: 16,
