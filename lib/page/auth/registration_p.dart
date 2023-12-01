@@ -1,14 +1,15 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:truckme/core/app_data/constants.dart';
+import 'package:truckme/core/util/util_file.dart';
 import 'package:truckme/page/auth/login_p.dart';
-import 'package:truckme/page/auth/sms_confirm_p.dart';
 import 'package:truckme/widget/component/password_input_form.dart';
 import 'package:truckme/widget/component/phone_input_form.dart';
 import 'package:truckme/widget/component/text_input_form.dart';
 import '../../core/component/size_config.dart';
+import '../../model/auth/success_message.dart';
+import '../../provider/auth_provider.dart';
 import '../../widget/component/custom_button.dart';
 
 class RegistrationP extends StatefulWidget {
@@ -27,71 +28,33 @@ class _RegistrationPState extends State<RegistrationP> {
   final TextEditingController _controllerPassword1 = TextEditingController();
   final TextEditingController _controllerPassword2 = TextEditingController();
 
-  // void _register() async {
-  //   final provider = Provider.of<AuthProvider>(context, listen: false);
-  //   setState(() {
-  //     _isLoading = true;
-  //   });
-  //   String smsTag = await SmsAutoFill().getAppSignature;
-  //   SuccessMessage successMessage = await provider.registerUser(
-  //     _controllerName.text,
-  //     _controllerSurname.text,
-  //     smsTag,
-  //   );
-  //   if (successMessage.message == Message.Login) {
-  //     if (mounted) {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => const SmsConfirmPage(),
-  //         ),
-  //       );
-  //     }
-  //   } else {
-  //     _alert("1".tr(), successMessage.body);
-  //   }
-  //   setState(() {
-  //     _isLoading = false;
-  //   });
-  // }
+  void _register() async {
+    final provider = Provider.of<AuthProvider>(context, listen: false);
+    final navigator = Navigator.of(context);
+    setState(() {
+      _isLoading = true;
+    });
+    // String smsTag = await SmsAutoFill().getAppSignature;
+    SuccessMessage successMessage = await provider.registerUser(
+      _controllerName.text,
+      _controllerSurname.text,
+      _controllerPhone.text,
+      _controllerPassword1.text,
+    );
+    if (successMessage.message == Message.Login) {
+      navigator.pushNamed("/sms");
+    } else {
+      _getAlert("Xatolik", successMessage.body);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
-  // void _alert(String title, String body) async {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) => CupertinoAlertDialog(
-  //       title: Text(title),
-  //       content: Text(body),
-  //       actions: <Widget>[
-  //         CupertinoDialogAction(
-  //           isDefaultAction: true,
-  //           child: Text("2".tr()),
-  //           onPressed: () async {
-  //             Navigator.of(context).pop();
-  //           },
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  void _getAlert(String title, String body) {
+    alert(context, title, body);
+  }
 
-  // _launchURL(String url) async {
-  //   FocusManager.instance.primaryFocus?.unfocus();
-  //   final Uri uri = Uri.parse(url);
-  //   if (await canLaunchUrl(uri)) {
-  //     final bool nativeAppLaunchSucceeded = await launchUrl(
-  //       uri,
-  //       mode: LaunchMode.externalApplication,
-  //     );
-  //     if (!nativeAppLaunchSucceeded) {
-  //       await launchUrl(
-  //         uri,
-  //         mode: LaunchMode.inAppWebView,
-  //       );
-  //     }
-  //   } else {
-  //     _alert("1".tr(), "20".tr());
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -214,13 +177,11 @@ class _RegistrationPState extends State<RegistrationP> {
                               _isPassword = true;
                             });
                           } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SmsConfirmP(),
-                              ),
-                            );
-                            // _register();
+                            if(_controllerPassword1.text == _controllerPassword2.text){
+                              _register();
+                            }else{
+                              alert(context, "Xatolik", "Parollar bir biriga mos emas!!!");
+                            }
                           }
                         },
                       ),

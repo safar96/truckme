@@ -14,54 +14,75 @@ import '../model/user/user_info.dart';
 import '../model/user/user_session.dart';
 
 class AuthProvider with ChangeNotifier {
+  static const String api = "http://192.248.183.120/api/v1";
 
-  Future<SuccessMessage> phoneRequest(String phone, String tag) async {
+  Future<SuccessMessage> login(String username, String password) async {
     final prefs = await SharedPreferences.getInstance();
-    const url = 'https://api.xpertmedia.uz/auth/v1/otp/request';
+    const url = "$api/auth/login";
     try {
       final response = await http.post(
         Uri.parse(url),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: json.encode({
-          "phone_number": phone,
-          "tag": tag,
+          "username": "998${username.replaceAll("-", "")}",
+          "password": password,
         }),
       );
+      print(response.body);
+      print(response.statusCode);
       var resBody = json.decode(response.body);
-      if (response.statusCode == 202) {
-        prefs.setString("sms_id", resBody['data']['sms_id']);
-        prefs.setString("phone", phone);
+      if (resBody['success'] == true) {
+        prefs.setString(
+          "phone",
+          "998${username.replaceAll("-", "")}"
+        );
         return SuccessMessage(Message.Login, "");
-      } else if (response.statusCode == 404) {
-        prefs.setString("phone", phone);
-        return SuccessMessage(Message.Register, "");
+      } else {
+        return SuccessMessage(Message.Error, resBody['message']);
       }
-      return SuccessMessage(Message.Error, resBody['data']);
     } catch (error) {
       return SuccessMessage(Message.Error, "Connection error");
     }
   }
 
-  Future<SuccessMessage> registerUser(String firstName, String lastName, String tag) async {
+  Future<SuccessMessage> registerUser(
+    String firstName,
+    String lastName,
+    String phone,
+    String password,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
-    String? phone = prefs.getString("phone");
-    const url = 'https://api.xpertmedia.uz/auth/v1/register';
+    const url = '$api/auth/registration';
     try {
       final response = await http.post(
         Uri.parse(url),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: json.encode({
-          "first_name": firstName,
-          "last_name": lastName,
-          "password": "",
-          "phone_number": phone,
-          "user_type": 0,
-          "tag": tag,
+          "firstName": firstName,
+          "lastName": lastName,
+          "phoneNumber": "998${phone.replaceAll("-", "")}",
+          "mail": "",
+          "password": password,
+          "userType": "client",
         }),
       );
+      print(response.body);
+      print(response.statusCode);
       var resBody = json.decode(response.body);
-      if (response.statusCode == 202) {
+      if (response.statusCode == 200) {
+        prefs.setString(
+          "phone",
+          "998${phone.replaceAll("-", "")}",
+        );
         return SuccessMessage(Message.Login, "");
       } else {
-        return SuccessMessage(Message.Error, resBody['data']);
+        return SuccessMessage(Message.Error, resBody['data']['message']);
       }
     } catch (error) {
       return SuccessMessage(Message.Error, "Connection error");
@@ -71,42 +92,75 @@ class AuthProvider with ChangeNotifier {
   Future<SuccessMessage> smsConfirm(String code) async {
     final prefs = await SharedPreferences.getInstance();
     String? phone = prefs.getString("phone");
-    String? smsId = prefs.getString("sms_id");
-    const url = 'https://api.xpertmedia.uz/auth/v1/otp/confirm';
+    const url = '$api/auth/login-verify';
+    print(phone);
+    print(code);
     try {
       final response = await http.post(
         Uri.parse(url),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: json.encode({
-          "code": code,
-          "phone_number": phone,
-          "sms_id": smsId,
+          "otpCode": code,
+          "username": phone,
         }),
       );
+      print(response.body);
+      print(response.statusCode);
       var resBody = json.decode(response.body);
 
-      if (response.statusCode == 200) {
-        await addUserSession(
-          resBody['data']['user']['id'],
-          resBody['data']['token']['access_token'],
-          resBody['data']['token']['refresh_token'],
-        );
-        Global.myUserInfo = UserInfo.fromJson(
-          resBody['data']['user'],
-          resBody['data']['token']['access_token'],
-          resBody['data']['token']['refresh_token'],
-        );
-        final String encodedData = Session.encode(resBody['data']['sessions'].map<Session>((document) {
-          return Session(
-            id: document['id'],
-            ip: document['ip'],
-            user_id: document['user_id'],
-            expires_at: document['expires_at'],
-          );
-        }).toList());
-        await prefs.setString('session_key', encodedData);
-        return SuccessMessage(Message.Succes, "");
-      }
+      // if (response.statusCode == 200) {
+      //   await addUserSession(
+      //     resBody['data']['user']['id'],
+      //     resBody['data']['token']['access_token'],
+      //     resBody['data']['token']['refresh_token'],
+      //   );
+      //   Global.myUserInfo = UserInfo.fromJson(
+      //     resBody['data']['user'],
+      //     resBody['data']['token']['access_token'],
+      //     resBody['data']['token']['refresh_token'],
+      //   );
+      //   final String encodedData = Session.encode(resBody['data']['sessions'].map<Session>((document) {
+      //     return Session(
+      //       id: document['id'],
+      //       ip: document['ip'],
+      //       user_id: document['user_id'],
+      //       expires_at: document['expires_at'],
+      //     );
+      //   }).toList());
+      //   await prefs.setString('session_key', encodedData);
+      //   return SuccessMessage(Message.Succes, "");
+      // }
       return SuccessMessage(Message.Error, resBody['data']);
+    } catch (error) {
+      return SuccessMessage(Message.Error, "Connection error");
+    }
+  }
+
+  Future<SuccessMessage> resentCode(String username) async {
+    const url = "$api/auth/sms-resend";
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode({
+          "phoneNumber": username,
+        }),
+      );
+      // print(username);
+      // print(response.body);
+      // print(response.statusCode);
+      var resBody = json.decode(response.body);
+      if (resBody['success'] == true) {
+        return SuccessMessage(Message.Succes, "");
+      } else {
+        return SuccessMessage(Message.Error, resBody['message']);
+      }
     } catch (error) {
       return SuccessMessage(Message.Error, "Connection error");
     }
@@ -170,7 +224,8 @@ class AuthProvider with ChangeNotifier {
     await checkToken();
     String url = 'https://api.xpertmedia.uz/auth/v1/session/$sessionId';
     try {
-      final response = await http.delete(Uri.parse(url), headers: {"Authorization": "Bearer ${Global.myUserInfo.token}"});
+      final response =
+          await http.delete(Uri.parse(url), headers: {"Authorization": "Bearer ${Global.myUserInfo.token}"});
       if (response.statusCode == 200) {
         return SuccessMessage(Message.Succes, "");
       } else {
@@ -295,7 +350,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> checkToken() async {
-    try{
+    try {
       bool hasExpired = JwtDecoder.isExpired(Global.myUserInfo.token);
       if (hasExpired) {
         const url = 'https://api.xpertmedia.uz/auth/v1/refresh';
@@ -321,8 +376,7 @@ class AuthProvider with ChangeNotifier {
           rethrow;
         }
       }
-    }catch (e){}
-
+    } catch (e) {}
   }
 
   Future<void> addUserSession(String id, String token, String refreshToken) async {
