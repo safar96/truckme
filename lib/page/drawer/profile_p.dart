@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../core/app_data/constants.dart';
 import '../../core/component/size_config.dart';
 import '../../widget/component/back_button_custom.dart';
-import '../../widget/component/card_with_right.dart';
 import '../../widget/component/custom_button.dart';
+import '../../widget/component/switch_profile.dart';
 
 class ProfileP extends StatefulWidget {
   const ProfileP({super.key});
@@ -19,8 +19,8 @@ class _ProfilePState extends State<ProfileP> {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        // backgroundColor: Colors.white,
+        elevation: 0,
+        backgroundColor: Colors.white,
         leading: Container(
           margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
           child: BackButtonCustom(
@@ -30,7 +30,7 @@ class _ProfilePState extends State<ProfileP> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 25,
           vertical: 8,
         ),
@@ -40,7 +40,7 @@ class _ProfilePState extends State<ProfileP> {
             Container(
                 width: getConfigWidth(0.3),
                 child: Image.asset('assets/images/photo_user.png')),
-            Text(
+            const Text(
               'Nuriddin',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
@@ -74,7 +74,7 @@ class _ProfilePState extends State<ProfileP> {
                   Row(
                     children: [
                       Image.asset('assets/images/ic_phone.png',width: 30,),
-                      SizedBox(width: 15,),
+                      const SizedBox(width: 15,),
                       const Text(
                         '+998 90 123 45 67',
                         style: TextStyle(
@@ -94,7 +94,7 @@ class _ProfilePState extends State<ProfileP> {
                   Row(
                     children: [
                       Image.asset('assets/images/ic_mail.png',width: 30,),
-                      SizedBox(width: 15,),
+                      const SizedBox(width: 15,),
                       const Text(
                         'nuriddin@truck.com',
                         style: TextStyle(
@@ -114,7 +114,7 @@ class _ProfilePState extends State<ProfileP> {
                   Row(
                     children: [
                       Image.asset('assets/images/ic_facebook.png',width: 30,),
-                      SizedBox(width: 15,),
+                      const SizedBox(width: 15,),
                       const Text(
                         '@nuriddintruck',
                         style: TextStyle(
@@ -128,8 +128,9 @@ class _ProfilePState extends State<ProfileP> {
                 ],
               ),
             ),
-            SizedBox(height: getConfigHeight(0.05),),
-            const  Row(
+            SizedBox(height: getConfigHeight(0.03),),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,12 +143,14 @@ class _ProfilePState extends State<ProfileP> {
                       style: TextStyle(fontSize: 16,color: Colors.grey),),
                   ],
                 ),
+                SwitchProfile(),
               ],
             ),
+
             SizedBox(height: getConfigHeight(0.02),),
 
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               height: getConfigHeight(0.1),
               decoration: const BoxDecoration(
                 color: Color(0xFFF7F8F9),
@@ -179,24 +182,24 @@ class _ProfilePState extends State<ProfileP> {
                     ),
                   ),
 
-                    Container(
-                      width: getConfigWidth(0.4) * 0.2,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            "assets/images/ic_arrow.png",
-                          ),
-                          scale: 1.5,
-                        ),
-                      ),
-                    ),
+                  // Container(
+                  //     width: getConfigWidth(0.4) * 0.2,
+                  //     decoration: const BoxDecoration(
+                  //       image: DecorationImage(
+                  //         image: AssetImage(
+                  //           "assets/images/ic_arrow.png",
+                  //         ),
+                  //         scale: 1.5,
+                  //       ),
+                  //     ),
+                  //   ),
                 ],
               ),
             ),
 
             SizedBox(height: getConfigHeight(0.06),),
 
-            Container(
+            SizedBox(
               height: getConfigHeight(0.07),
               width: getConfigWidth(0.9),
               child: CustomButton(
@@ -215,3 +218,6 @@ class _ProfilePState extends State<ProfileP> {
     );
   }
 }
+
+
+

@@ -42,6 +42,7 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
         child: Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
+            elevation: 0,
             backgroundColor: Colors.white,
             leading: Container(
               margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:truckme/core/component/size_config.dart';
+import 'package:truckme/page/drawer/card_adding_p.dart';
 import 'package:truckme/widget/component/language_card.dart';
 
 import '../../model/card/card_list.dart';
@@ -33,6 +34,7 @@ class _PaymentPState extends State<PaymentP> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        elevation: 0,
         centerTitle: true,
         leading: Container(
           margin:const EdgeInsets.fromLTRB(20, 0, 0, 0),
@@ -45,6 +47,7 @@ class _PaymentPState extends State<PaymentP> {
           "To'lov usuli",
           style: TextStyle(
             fontWeight: FontWeight.bold,
+            color: Colors.black,
             fontSize: 24,
           ),
         ),
@@ -96,7 +99,11 @@ class _PaymentPState extends State<PaymentP> {
                         height: getConfigHeight(0.07),
                         width: getConfigWidth(0.8),
                         title: "Karta qo'shish",
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CardAddingP(),
+                          ));
+                        },
                       ),
                     ),
                   ]),

@@ -5,6 +5,7 @@ import 'package:truckme/page/drawer/payment_p.dart';
 import 'package:truckme/page/drawer/profile_p.dart';
 import 'package:truckme/page/drawer/support_p.dart';
 import 'package:truckme/page/drawer/travel_history_p.dart';
+import 'package:truckme/page/main/main_new.dart';
 
 class DrawerP extends StatefulWidget {
   const DrawerP({super.key});
@@ -111,7 +112,7 @@ class _DrawerPState extends State<DrawerP> {
                   ),
                   // selected: _selectedIndex == 0,
                   onTap: () {
-                    _onItemTapped(0);
+                    // _onItemTapped(0);
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => TravelHistoryP(),
                     ));
@@ -131,9 +132,9 @@ class _DrawerPState extends State<DrawerP> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  selected: _selectedIndex == 1,
+                  // selected: _selectedIndex == 1,
                   onTap: () {
-                    _onItemTapped(1);
+                    // _onItemTapped(1);
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const PaymentP(),
                     ));
@@ -153,9 +154,9 @@ class _DrawerPState extends State<DrawerP> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  selected: _selectedIndex == 2,
+                  // selected: _selectedIndex == 2,
                   onTap: () {
-                    _onItemTapped(2);
+                    // _onItemTapped(2);
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const SupportP(),
                     ));
@@ -175,10 +176,12 @@ class _DrawerPState extends State<DrawerP> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  selected: _selectedIndex == 2,
+                  // selected: _selectedIndex == 2,
                   onTap: () {
-                    _onItemTapped(2);
-                    Navigator.pop(context);
+                    // _onItemTapped(2);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const MainNew(),
+                    ));
                   },
                 ),
               ],

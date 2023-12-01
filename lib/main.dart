@@ -8,6 +8,7 @@ import 'package:truckme/page/auth/splash_p.dart';
 import 'package:truckme/page/drawer/travel_details_p.dart';
 import 'package:truckme/page/drawer/travel_history_p.dart';
 import 'package:truckme/page/main/announcement_p.dart';
+import 'package:truckme/page/main/main_new.dart';
 import 'package:truckme/page/main/main_p.dart';
 import 'package:truckme/page/main/delivery_map_p.dart';
 import 'package:truckme/page/main/request_seccess_p.dart';
@@ -42,31 +43,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-          value: AuthProvider(),
-        ),
-      ],
-      child: MaterialApp(
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        title: 'TruckMe',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const LoginP(),
-        routes: {
-          // "/first": (BuildContext context) => const FirstPage(),
-          "/login": (BuildContext context) => const LoginP(),
-          "/registration": (BuildContext context) => const RegistrationP(),
-          "/sms": (BuildContext context) => const SmsConfirmP(),
-          "/main-page": (BuildContext context) => const MainP(),
-        },
+    return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      title: 'TruckMe',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
+      home: const MainNew(),
+      routes: {
+        // "/first": (BuildContext context) => const FirstPage(),
+        "/login": (BuildContext context) => const LoginP(),
+        "/registration": (BuildContext context) => const RegistrationP(),
+        // "/main-page": (BuildContext context) => const MainPage(),
+      },
     );
   }
 }
