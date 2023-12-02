@@ -168,7 +168,7 @@ class _MainNewState extends State<MainNew> {
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: getConfigHeight(0.01), ),
             GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
@@ -188,7 +188,7 @@ class _MainNewState extends State<MainNew> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            height: getConfigHeight(0.05) - 3,
+                            height: getConfigHeight(0.046) ,
                             width: getConfigWidth(0.3),
                             alignment: Alignment.center,
                             child: Padding(
@@ -204,7 +204,7 @@ class _MainNewState extends State<MainNew> {
                             ),
                           ),
                           Container(
-                            height: 3,
+                            height: getConfigHeight(0.004),
                             width: getConfigWidth(0.3),
                             decoration: BoxDecoration(
                               color: _isNew ? Constants.primaryColor : Constants.unSelectColor,
@@ -233,7 +233,7 @@ class _MainNewState extends State<MainNew> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              height: getConfigHeight(0.05) - 3,
+                              height: getConfigHeight(0.046),
                               width: getConfigWidth(0.3),
                               alignment: Alignment.center,
                               child: Padding(
@@ -249,7 +249,7 @@ class _MainNewState extends State<MainNew> {
                               ),
                             ),
                             Container(
-                              height: 3,
+                              height: getConfigHeight(0.004),
                               width: getConfigWidth(0.3),
                               decoration: BoxDecoration(
                                 color: !_isNew ? Constants.primaryColor : Constants.unSelectColor,
@@ -263,7 +263,7 @@ class _MainNewState extends State<MainNew> {
                       ),
                     ),
                     Container(
-                      width: getConfigWidth(0.3) - 5,
+                      width: getConfigWidth(0.28),
                       alignment: Alignment.bottomRight,
                       child: IconButtonCustom(
                         height: getConfigHeight(0.045),
@@ -276,10 +276,10 @@ class _MainNewState extends State<MainNew> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: getConfigHeight(0.01),),
             !_isDataNull
                 ? Container(
-                    height: getConfigHeight(0.73) - 10,
+                    height: getConfigHeight(0.72),
                     width: getConfigWidth(1),
                     alignment: Alignment.topCenter,
                     child: ListView.builder(
@@ -458,7 +458,7 @@ class _MainNewState extends State<MainNew> {
                                                 ],
                                               ),
                                             ),
-                                            const SizedBox(height: 20),
+                                            SizedBox(height: getConfigHeight(0.02),),
                                             Container(
                                               height: 2,
                                               width: getConfigWidth(0.8),
@@ -611,7 +611,7 @@ class _MainNewState extends State<MainNew> {
                     ),
                   )
                 : SizedBox(
-                    height: getConfigHeight(0.72) - 20,
+                    height: getConfigHeight(0.72),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
