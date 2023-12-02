@@ -37,7 +37,7 @@ class _ProfilePState extends State<ProfileP> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
                 width: getConfigWidth(0.3),
                 child: Image.asset('assets/images/photo_user.png')),
             const Text(
