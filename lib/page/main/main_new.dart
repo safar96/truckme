@@ -21,7 +21,7 @@ class _MainNewState extends State<MainNew> {
   bool _isDelivery = true;
   String _showId = "-1";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool _isDataNull = true;
+  bool _isDataNull = false;
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +279,7 @@ class _MainNewState extends State<MainNew> {
             const SizedBox(height: 10),
             !_isDataNull
                 ? Container(
-                    height: getConfigHeight(0.72) - 20,
+                    height: getConfigHeight(0.73) - 10,
                     width: getConfigWidth(1),
                     alignment: Alignment.topCenter,
                     child: ListView.builder(
@@ -321,14 +321,14 @@ class _MainNewState extends State<MainNew> {
                                             Text(
                                               "№000001",
                                               style: TextStyle(
-                                                color: Constants.textBlackColor,
+                                                color: Constants.unSelectColor,
                                                 fontSize: 18,
                                               ),
                                             ),
                                             Text(
                                               "5 soat",
                                               style: TextStyle(
-                                                color: Constants.textBlackColor,
+                                                color: Constants.unSelectColor,
                                                 fontSize: 18,
                                               ),
                                             ),
@@ -647,7 +647,7 @@ class _MainNewState extends State<MainNew> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        height: getConfigHeight(0.06),
+        height: getConfigHeight(0.075),
         shape: const CircularNotchedRectangle(),
         color: Constants.primaryColor,
         elevation: 0,
