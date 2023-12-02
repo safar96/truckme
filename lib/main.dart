@@ -43,23 +43,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      title: 'TruckMe',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: AuthProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        title: 'TruckMe',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const SplashP(),
+        routes: {
+          // "/first": (BuildContext context) => const FirstPage(),
+          "/login": (BuildContext context) => const LoginP(),
+          "/registration": (BuildContext context) => const RegistrationP(),
+          "/sms": (BuildContext context) => const SmsConfirmP(),
+          "/main-page": (BuildContext context) => const MainNew(),
+        },
       ),
-      home: const MainNew(),
-      routes: {
-        // "/first": (BuildContext context) => const FirstPage(),
-        "/login": (BuildContext context) => const LoginP(),
-        "/registration": (BuildContext context) => const RegistrationP(),
-        // "/main-page": (BuildContext context) => const MainPage(),
-      },
     );
   }
 }

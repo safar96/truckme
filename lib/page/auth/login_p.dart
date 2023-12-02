@@ -35,6 +35,8 @@ class _LoginPState extends State<LoginP> {
     );
     if (successMessage.message == Message.Login) {
       navigator.pushNamed("/sms");
+    }else if (successMessage.message == Message.Succes) {
+      navigator.pushNamed("/main-page");
     } else {
       _getAlert("Xatolik", successMessage.body);
     }

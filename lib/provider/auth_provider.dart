@@ -8,7 +8,6 @@ import '../core/app_data/global_class.dart';
 import '../core/database/init_database.dart';
 import '../core/database/user_session_table.dart';
 import '../model/auth/success_message.dart';
-import '../model/user/session.dart';
 import '../model/user/success_message_user.dart';
 import '../model/user/user_info.dart';
 import '../model/user/user_session.dart';
@@ -34,11 +33,20 @@ class AuthProvider with ChangeNotifier {
       print(response.body);
       print(response.statusCode);
       var resBody = json.decode(response.body);
-      if (resBody['success'] == true) {
-        prefs.setString(
-          "phone",
-          "998${username.replaceAll("-", "")}"
+      if (response.statusCode == 200) {
+        await addUserSession(
+          "",
+          resBody['data']['accessToken']['token'],
+          resBody['data']['refreshToken']['token'],
         );
+        Global.myUserInfo = UserInfo.fromJson(
+          {},
+          resBody['data']['accessToken']['token'],
+          resBody['data']['refreshToken']['token'],
+        );
+        return SuccessMessage(Message.Succes, "");
+      } else if (response.statusCode == 201) {
+        prefs.setString("phone", "998${username.replaceAll("-", "")}");
         return SuccessMessage(Message.Login, "");
       } else {
         return SuccessMessage(Message.Error, resBody['message']);
@@ -111,28 +119,19 @@ class AuthProvider with ChangeNotifier {
       print(response.statusCode);
       var resBody = json.decode(response.body);
 
-      // if (response.statusCode == 200) {
-      //   await addUserSession(
-      //     resBody['data']['user']['id'],
-      //     resBody['data']['token']['access_token'],
-      //     resBody['data']['token']['refresh_token'],
-      //   );
-      //   Global.myUserInfo = UserInfo.fromJson(
-      //     resBody['data']['user'],
-      //     resBody['data']['token']['access_token'],
-      //     resBody['data']['token']['refresh_token'],
-      //   );
-      //   final String encodedData = Session.encode(resBody['data']['sessions'].map<Session>((document) {
-      //     return Session(
-      //       id: document['id'],
-      //       ip: document['ip'],
-      //       user_id: document['user_id'],
-      //       expires_at: document['expires_at'],
-      //     );
-      //   }).toList());
-      //   await prefs.setString('session_key', encodedData);
-      //   return SuccessMessage(Message.Succes, "");
-      // }
+      if (response.statusCode == 200) {
+        await addUserSession(
+          "",
+          resBody['data']['accessToken']['token'],
+          resBody['data']['refreshToken']['token'],
+        );
+        Global.myUserInfo = UserInfo.fromJson(
+          {},
+          resBody['data']['accessToken']['token'],
+          resBody['data']['refreshToken']['token'],
+        );
+        return SuccessMessage(Message.Succes, "");
+      }
       return SuccessMessage(Message.Error, resBody['data']);
     } catch (error) {
       return SuccessMessage(Message.Error, "Connection error");
