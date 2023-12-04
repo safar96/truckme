@@ -3,6 +3,7 @@ import 'package:truckme/widget/component/back_button_custom.dart';
 
 import '../../core/app_data/constants.dart';
 import '../../core/component/size_config.dart';
+import 'delivery_request_p.dart';
 
 class MainAddP extends StatelessWidget {
   const MainAddP({super.key});
@@ -55,47 +56,58 @@ class MainAddP extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: getConfigWidth(0.9),
-                        height: getConfigHeight(0.2),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:  BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: Offset(0, 0),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DeliveryRequestP(),
                             ),
-                          ],
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SizedBox(
-                              width: getConfigWidth(0.35),
-                              child: const Text(
-                                'Yuk tashish',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                          );
+                        },
+                        behavior: HitTestBehavior.translucent,
+                        child: Container(
+                          width: getConfigWidth(0.9),
+                          height: getConfigHeight(0.2),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:  BorderRadius.all(
+                              Radius.circular(12),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: Offset(0, 0),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                width: getConfigWidth(0.35),
+                                child: const Text(
+                                  'Yuk tashish',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: getConfigWidth(0.02),
-                            ),
-                            Image.asset(
-                              'assets/images/truck.png',
-                              width: getConfigWidth(0.5),
-                              fit: BoxFit.fill,
-                            )
-                          ],
+                              SizedBox(
+                                width: getConfigWidth(0.02),
+                              ),
+                              Image.asset(
+                                'assets/images/truck.png',
+                                width: getConfigWidth(0.5),
+                                fit: BoxFit.fill,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(height: getConfigHeight(0.05),),

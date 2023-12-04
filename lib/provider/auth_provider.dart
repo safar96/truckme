@@ -44,6 +44,7 @@ class AuthProvider with ChangeNotifier {
           resBody['data']['accessToken']['token'],
           resBody['data']['refreshToken']['token'],
         );
+        prefs.setString("phone", "998${username.replaceAll("-", "")}");
         return SuccessMessage(Message.Succes, "");
       } else if (response.statusCode == 201) {
         prefs.setString("phone", "998${username.replaceAll("-", "")}");

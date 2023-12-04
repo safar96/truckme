@@ -4,17 +4,24 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:truckme/core/component/size_config.dart';
+import 'package:truckme/model/auth/success_message.dart';
+import 'package:truckme/model/main/application.dart';
 import 'package:truckme/page/main/request_seccess_p.dart';
+import 'package:truckme/provider/request_provider.dart';
 import 'package:truckme/widget/component/card_with_right.dart';
 import 'package:truckme/widget/map/location_search.dart';
 import '../../core/app_data/constants.dart';
 import '../../core/util/map.dart';
+import '../../core/util/util_file.dart';
 import '../../model/card/card_list.dart';
 import '../../widget/component/custom_button.dart';
 
 class DeliveryMapP extends StatefulWidget {
-  const DeliveryMapP({super.key});
+  final Application application;
+
+  const DeliveryMapP({super.key, required this.application});
 
   @override
   State<DeliveryMapP> createState() => _DeliveryMapPState();
@@ -150,6 +157,29 @@ class _DeliveryMapPState extends State<DeliveryMapP> {
         _isShowMap = false;
       });
     }
+  }
+
+  void _sentOrder() async {
+    final provider = Provider.of<RequestProvider>(context, listen: false);
+    final nav = Navigator.of(context);
+    SuccessMessage message = await provider.sentRequest(widget.application, _firstLocation, _secondLocation);
+    if (message.message == Message.Succes) {
+      nav.push(
+        MaterialPageRoute(
+          builder: (context) => RequestSuccessP(
+            from: _searchControllerFrom.text,
+            to: _searchControllerTo.text,
+            isDelivery: true,
+          ),
+        ),
+      );
+    } else {
+      _getAlert("Xatolik", message.body);
+    }
+  }
+
+  void _getAlert(String title, String body) {
+    alert(context, title, body);
   }
 
   @override
@@ -554,18 +584,7 @@ class _DeliveryMapPState extends State<DeliveryMapP> {
                                     name: "Tastiqlash",
                                     textSize: 18,
                                     textColor: Constants.backgroundColor,
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => RequestSuccessP(
-                                            from: _searchControllerFrom.text,
-                                            to: _searchControllerTo.text,
-                                            isDelivery: true,
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                    onTap: _sentOrder,
                                     colorButton: Constants.primaryColor,
                                   ),
                                 ),

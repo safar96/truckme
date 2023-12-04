@@ -15,6 +15,7 @@ import 'package:truckme/page/main/request_seccess_p.dart';
 import 'package:truckme/page/main/special_auto_map_p.dart';
 import 'package:truckme/page/main/special_auto_request_p.dart';
 import 'package:truckme/provider/auth_provider.dart';
+import 'package:truckme/provider/request_provider.dart';
 
 import 'core/language/language_selection.dart';
 
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: AuthProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: RequestProvider(),
         ),
       ],
       child: MaterialApp(
