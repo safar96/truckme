@@ -27,6 +27,7 @@ class RequestProvider with ChangeNotifier {
       List<WorkType> projectList = list.map((model) => WorkType.fromJson(model)).toList();
       return projectList;
     } catch (error) {
+      print(error);
       return [];
     }
   }
@@ -42,11 +43,14 @@ class RequestProvider with ChangeNotifier {
         },
         Uri.parse(url),
       );
+      print(response.body);
+      print(response.statusCode);
       var resBody = json.decode(response.body);
       Iterable list = resBody["data"];
       List<VehicleType> projectList = list.map((model) => VehicleType.fromJson(model)).toList();
       return projectList;
     } catch (error) {
+      print(error);
       return [];
     }
   }
@@ -95,6 +99,26 @@ class RequestProvider with ChangeNotifier {
     } catch (error) {
       print(error);
       return SuccessMessage(Message.Error, "Connection error");
+    }
+  }
+
+  Future<List<Application>> getApplications() async {
+    String url = '$api/applications';
+    try {
+      final response = await http.get(
+        headers: {
+          "Authorization": "Bearer ${Global.myUserInfo.token}",
+          'Content-type': 'application/json; charset=utf-8',
+          'Accept': 'application/json; charset=utf-8',
+        },
+        Uri.parse(url),
+      );
+      var resBody = json.decode(response.body);
+      Iterable list = resBody["data"];
+      List<Application> projectList = list.map((model) => Application.fromJson(model)).toList();
+      return projectList;
+    } catch (error) {
+      return [];
     }
   }
 }

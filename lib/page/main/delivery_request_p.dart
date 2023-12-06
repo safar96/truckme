@@ -28,8 +28,8 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
   List<WorkType> _workTypes = [];
   List<VehicleType> _vehicleTypes = [];
   bool _isLoading = false;
-  final List<DropDownModel> _listWorkType = [];
-  final List<DropDownModel> _listVehicleType = [];
+  List<DropDownModel> _listWorkType = [];
+  List<DropDownModel> _listVehicleType = [];
   String _phone = "";
 
   Future<void> _getInfo() async {
@@ -47,16 +47,17 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
       _listVehicleType.add(DropDownModel(id: w.id, name: w.vehicleTypeNameCyril));
     }
     _phone = pref.getString("phone")!;
+    setState(() {});
   }
 
   @override
   void initState() {
-    super.initState();
     _getInfo().then((value) {
       setState(() {
         _isLoading = false;
       });
     });
+    super.initState();
   }
 
   DropDownModel _carType = DropDownModel(id: 1, name: "test1");
@@ -80,13 +81,13 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
         },
-        child: SizedBox(
-          height: getConfigFullHeight(),
-          child: _isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : SingleChildScrollView(
+        child: _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : SizedBox(
+                height: getConfigFullHeight(),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
@@ -104,34 +105,36 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                           ),
                         ),
                       ),
-                      DropDownButton(
-                        titleHeight: getConfigHeight(0.05),
-                        titleWidth: getConfigWidth(0.8),
-                        title: "Avtomabil turi".toUpperCase(),
-                        dropDownHeight: getConfigHeight(0.07),
-                        dropDownWidth: getConfigWidth(0.8),
-                        onSelect: (m) {
-                          setState(() {
-                            _carType = m!;
-                          });
-                        },
-                        data: _listVehicleType,
-                        initialData: _listVehicleType.first,
-                      ),
-                      DropDownButton(
-                        titleHeight: getConfigHeight(0.05),
-                        titleWidth: getConfigWidth(0.8),
-                        title: "yuk turlari".toUpperCase(),
-                        dropDownHeight: getConfigHeight(0.07),
-                        dropDownWidth: getConfigWidth(0.8),
-                        onSelect: (m) {
-                          setState(() {
-                            _baggageType = m!;
-                          });
-                        },
-                        data: _listWorkType,
-                        initialData: _listWorkType.first,
-                      ),
+                      if (_listVehicleType.isNotEmpty)
+                        DropDownButton(
+                          titleHeight: getConfigHeight(0.05),
+                          titleWidth: getConfigWidth(0.8),
+                          title: "Avtomabil turi".toUpperCase(),
+                          dropDownHeight: getConfigHeight(0.07),
+                          dropDownWidth: getConfigWidth(0.8),
+                          onSelect: (m) {
+                            setState(() {
+                              _carType = m!;
+                            });
+                          },
+                          data: _listVehicleType,
+                          initialData: _listVehicleType.first,
+                        ),
+                      if (_listWorkType.isNotEmpty)
+                        DropDownButton(
+                          titleHeight: getConfigHeight(0.05),
+                          titleWidth: getConfigWidth(0.8),
+                          title: "yuk turlari".toUpperCase(),
+                          dropDownHeight: getConfigHeight(0.07),
+                          dropDownWidth: getConfigWidth(0.8),
+                          onSelect: (m) {
+                            setState(() {
+                              _baggageType = m!;
+                            });
+                          },
+                          data: _listWorkType,
+                          initialData: _listWorkType.first,
+                        ),
                       Container(
                         height: getConfigHeight(0.05),
                         width: getConfigWidth(0.8),
@@ -294,11 +297,11 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                                 vehicleTypeId: _carType.id,
                                 workTypeId: _baggageType.id,
                                 description: _description.text,
-                                weight: int.parse(_weight.text),
-                                width: int.parse(_volume3.text),
-                                height: int.parse(_volume2.text),
-                                depth: int.tryParse(_volume1.text),
-                                approxAmount: int.parse(_count.text),
+                                weight: double.parse(_weight.text),
+                                width: double.parse(_volume3.text),
+                                height: double.parse(_volume2.text),
+                                depth: double.tryParse(_volume1.text),
+                                approxAmount: double.parse(_count.text),
                                 loadDateTime: "${_date.text} ${_time.text}",
                                 receiverPhone: _phone,
                                 directionType: _isInTown ? "INTERURBAN" : "OUTERURBAN");
@@ -317,7 +320,7 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                     ],
                   ),
                 ),
-        ),
+              ),
       ),
     );
   }
