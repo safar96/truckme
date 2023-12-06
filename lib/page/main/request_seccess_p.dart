@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:truckme/core/app_data/constants.dart';
 import 'package:truckme/core/component/size_config.dart';
 import 'package:truckme/page/main/main_new.dart';
-import 'package:truckme/page/main/main_p.dart';
 import 'package:truckme/widget/component/back_button_custom.dart';
 import 'package:truckme/widget/component/custom_button.dart';
 

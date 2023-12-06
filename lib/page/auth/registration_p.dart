@@ -42,7 +42,7 @@ class _RegistrationPState extends State<RegistrationP> {
       _controllerPassword1.text,
     );
     if (successMessage.message == Message.Login) {
-      navigator.pushNamed("/sms");
+      navigator.pushNamed("/login");
     } else {
       _getAlert("Xatolik", successMessage.body);
     }

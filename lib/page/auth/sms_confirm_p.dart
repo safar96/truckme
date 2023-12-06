@@ -1,13 +1,9 @@
 import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:truckme/page/main/main_p.dart';
 import '../../core/component/size_config.dart';
 import '../../core/util/util_file.dart';
 import '../../model/auth/success_message.dart';
