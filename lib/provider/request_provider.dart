@@ -57,6 +57,26 @@ class RequestProvider with ChangeNotifier {
 
   Future<SuccessMessage> sentRequest(Application application, LatLng from, LatLng to) async {
     const url = "$api/applications";
+    print(json.encode({
+      "categoryId": application.categoryId,
+      "vehicleTypeId": application.vehicleTypeId,
+      "workTypeId": application.workTypeId,
+      "sourceLatitude": from.latitude,
+      "sourceLongitude": from.longitude,
+      "targetLatitude": to.latitude,
+      "targetLongitude": to.longitude,
+      "description": application.description,
+      "weight": application.weight,
+      "dimension": application.height! * application.width! * application.depth!,
+      "width": application.width,
+      "height": application.height,
+      "depth": application.depth,
+      "distance": 0,
+      "approxAmount": application.approxAmount,
+      "loadDateTime": "${application.loadDateTime?.replaceAll("-", ".")}:00",
+      "receiverPhone": application.receiverPhone,
+      "directionType": application.directionType
+    }));
     try {
       print(json.encode({
         "categoryId": application.categoryId,

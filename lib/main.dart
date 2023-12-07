@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:truckme/page/auth/login_p.dart';
 import 'package:truckme/page/auth/registration_p.dart';
@@ -8,38 +9,95 @@ import 'package:truckme/page/auth/splash_p.dart';
 import 'package:truckme/page/main/main_new.dart';
 import 'package:truckme/provider/auth_provider.dart';
 import 'package:truckme/provider/request_provider.dart';
+import 'core/app_data/global_class.dart';
+import 'core/database/init_database.dart';
+import 'core/database/user_session_table.dart';
 import 'core/language/language_selection.dart';
+import 'model/user/user_info.dart';
+import 'model/user/user_session.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
+  Global.isFirst = true;
+
   Locale locale = await getLocal();
   runApp(
-    EasyLocalization(
-      supportedLocales: const [
-        Locale('uz', 'UZB'),
-        Locale('ru', 'RU'),
-        Locale('en', 'EN'),
-      ],
-      fallbackLocale: const Locale('uz', 'UZB'),
-      startLocale: locale,
-      path: 'assets/translations',
-      child: const MyApp(),
+    ChangeNotifierProvider<AuthProvider>(
+      create: (BuildContext context) => AuthProvider(),
+      child: EasyLocalization(
+        supportedLocales: const [
+          Locale('uz', 'UZB'),
+          Locale('ru', 'RU'),
+          Locale('en', 'EN'),
+        ],
+        fallbackLocale: const Locale('uz', 'UZB'),
+        startLocale: locale,
+        path: 'assets/translations',
+        child: const MyApp(),
+      ),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _isLoading = false;
+  bool _isFirstLogin = true;
+
+  Future<void> _checkLoginInfo() async {
+    // final provider = Provider.of<AuthProvider>(context, listen: false);
+    InitDatabase initDatabase = InitDatabase();
+    UserSessionTable userSessionTable = UserSessionTable();
+    int len = 0;
+    await initDatabase.initializedDB().whenComplete(() async {
+      len = await userSessionTable.countUserSession();
+    });
+    if (len != 0) {
+      UserSession userSession = await userSessionTable.retrieveUserSession();
+      if (!JwtDecoder.isExpired(userSession.token)) {
+        Global.myUserInfo = UserInfo.fromJson(
+          {},
+          userSession.token,
+          userSession.refresh_token,
+        );
+        _isFirstLogin = false;
+      } else {
+        await initDatabase.initializedDB().whenComplete(() async {
+          await userSessionTable.deleteUserSession();
+        });
+        _isFirstLogin = true;
+      }
+    } else {
+      _isFirstLogin = true;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _isLoading = true;
+    });
+    _checkLoginInfo().then((value) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(
-          value: AuthProvider(),
-        ),
         ChangeNotifierProvider.value(
           value: RequestProvider(),
         ),
@@ -54,7 +112,13 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SplashP(),
+        home: _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : _isFirstLogin
+                ? const SplashP()
+                : const MainNew(),
         routes: {
           // "/first": (BuildContext context) => const FirstPage(),
           "/login": (BuildContext context) => const LoginP(),
@@ -66,7 +130,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 
 //flutter build apk --split-per-abi
