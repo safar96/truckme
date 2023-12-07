@@ -1,15 +1,15 @@
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:truckme/model/main/api_response.dart';
 import 'package:truckme/model/main/application.dart';
-import 'package:truckme/model/main/vehicle_type.dart';
-import 'package:truckme/model/main/work_type.dart';
 import '../core/app_data/global_class.dart';
 import '../model/auth/success_message.dart';
 
 class RequestProvider with ChangeNotifier {
-  static const String api = "http://192.248.183.120/api/v1";
+  static const String api = "http://108.61.165.121/api/v1";
 
   Future<List<WorkType>> getWorkTypes() async {
     String url = '$api/catalog/work-types';
@@ -58,6 +58,26 @@ class RequestProvider with ChangeNotifier {
   Future<SuccessMessage> sentRequest(Application application, LatLng from, LatLng to) async {
     const url = "$api/applications";
     try {
+      print(json.encode({
+        "categoryId": application.categoryId,
+        "vehicleTypeId": application.vehicleTypeId,
+        "workTypeId": application.workTypeId,
+        "sourceLatitude": from.latitude,
+        "sourceLongitude": from.longitude,
+        "targetLatitude": to.latitude,
+        "targetLongitude": to.longitude,
+        "description": application.description,
+        "weight": application.weight,
+        "dimension": application.height! * application.width! * application.depth!,
+        "width": application.width,
+        "height": application.height,
+        "depth": application.depth,
+        "distance": 0,
+        "approxAmount": application.approxAmount,
+        "loadDateTime": application.loadDateTime,
+        "receiverPhone": application.receiverPhone,
+        "directionType": application.directionType
+      }));
       final response = await http.post(
         Uri.parse(url),
         headers: {
@@ -81,7 +101,7 @@ class RequestProvider with ChangeNotifier {
           "depth": application.depth,
           "distance": 0,
           "approxAmount": application.approxAmount,
-          "loadDateTime": "${application.loadDateTime?.replaceAll("-", ".")}:00",
+          "loadDateTime": application.loadDateTime,
           "receiverPhone": application.receiverPhone,
           "directionType": application.directionType
         }),
@@ -102,7 +122,7 @@ class RequestProvider with ChangeNotifier {
     }
   }
 
-  Future<List<Application>> getApplications() async {
+  Future<ApiResponse> getApplications() async {
     String url = '$api/applications';
     try {
       final response = await http.get(
@@ -114,11 +134,11 @@ class RequestProvider with ChangeNotifier {
         Uri.parse(url),
       );
       var resBody = json.decode(response.body);
-      Iterable list = resBody["data"];
-      List<Application> projectList = list.map((model) => Application.fromJson(model)).toList();
-      return projectList;
+      return ApiResponse.fromJson(resBody);
     } catch (error) {
-      return [];
+      print(error);
+      rethrow;
+      return ApiResponse(success: false, data: []);
     }
   }
 }

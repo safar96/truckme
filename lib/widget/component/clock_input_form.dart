@@ -33,7 +33,7 @@ class _ClockInputFormState extends State<ClockInputForm> {
 
     if (pickedDate != null) {
       setState(() {
-        widget.controller.text = "${pickedDate.hour}:${pickedDate.minute}";
+        widget.controller.text = pickedDate.format(context).toString();
       });
     }
   }

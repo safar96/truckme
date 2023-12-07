@@ -13,7 +13,7 @@ import '../model/user/user_info.dart';
 import '../model/user/user_session.dart';
 
 class AuthProvider with ChangeNotifier {
-  static const String api = "http://192.248.183.120/api/v1";
+  static const String api = "http://108.61.165.121/api/v1";
 
   Future<SuccessMessage> login(String username, String password) async {
     final prefs = await SharedPreferences.getInstance();

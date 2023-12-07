@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,8 +11,7 @@ import 'package:truckme/widget/component/custom_button.dart';
 import 'package:truckme/widget/component/date_input_form.dart';
 import '../../core/app_data/constants.dart';
 import '../../core/component/size_config.dart';
-import '../../model/main/vehicle_type.dart';
-import '../../model/main/work_type.dart';
+import '../../model/main/api_response.dart';
 import '../../widget/component/clock_input_form.dart';
 import '../../widget/component/drop_down_button.dart';
 import '../../widget/component/text_area_form.dart';
@@ -116,6 +116,7 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                             setState(() {
                               _carType = m!;
                             });
+                            print(m?.id);
                           },
                           data: _listVehicleType,
                           initialData: _listVehicleType.first,
@@ -302,7 +303,7 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                                 height: double.parse(_volume2.text),
                                 depth: double.tryParse(_volume1.text),
                                 approxAmount: double.parse(_count.text),
-                                loadDateTime: "${_date.text} ${_time.text}",
+                                loadDateTime: "${_date.text.replaceAll("-", ".")} ${_time.text}:00",
                                 receiverPhone: _phone,
                                 directionType: _isInTown ? "INTERURBAN" : "OUTERURBAN");
                             Navigator.push(
