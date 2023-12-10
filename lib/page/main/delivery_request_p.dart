@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:truckme/core/app_data/global_class.dart';
 import 'package:truckme/model/main/application.dart';
 import 'package:truckme/page/main/delivery_map_p.dart';
 import 'package:truckme/provider/request_provider.dart';
@@ -18,18 +17,36 @@ import '../../widget/component/text_area_form.dart';
 import '../../widget/component/text_input_form.dart';
 
 class DeliveryRequestP extends StatefulWidget {
-  const DeliveryRequestP({super.key});
+  final bool isNew;
+  final DataItem? dataItem;
+
+  const DeliveryRequestP({
+    super.key,
+    required this.isNew,
+    this.dataItem,
+  });
 
   @override
   State<DeliveryRequestP> createState() => _DeliveryRequestPState();
 }
 
 class _DeliveryRequestPState extends State<DeliveryRequestP> {
+  DropDownModel _carType = DropDownModel(id: 1, name: "test1");
+  DropDownModel _baggageType = DropDownModel(id: 1, name: "test1");
+  final TextEditingController _volume1 = TextEditingController();
+  final TextEditingController _volume2 = TextEditingController();
+  final TextEditingController _volume3 = TextEditingController();
+  final TextEditingController _date = TextEditingController();
+  final TextEditingController _time = TextEditingController();
+  final TextEditingController _weight = TextEditingController();
+  final TextEditingController _amount = TextEditingController();
+  final TextEditingController _description = TextEditingController();
+  bool _isInTown = true;
   List<WorkType> _workTypes = [];
   List<VehicleType> _vehicleTypes = [];
   bool _isLoading = false;
-  List<DropDownModel> _listWorkType = [];
-  List<DropDownModel> _listVehicleType = [];
+  final List<DropDownModel> _listWorkType = [];
+  final List<DropDownModel> _listVehicleType = [];
   String _phone = "";
 
   Future<void> _getInfo() async {
@@ -47,7 +64,26 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
       _listVehicleType.add(DropDownModel(id: w.id, name: w.vehicleTypeNameCyril));
     }
     _phone = pref.getString("phone")!;
+    if(widget.isNew){
+      _carType = _listVehicleType.first;
+      _baggageType = _listWorkType.first;
+    }else{
+      await _setValue();
+    }
+
     setState(() {});
+  }
+
+  Future<void> _setValue() async {
+    DataItem? app = widget.dataItem;
+    _volume1.text = app!.depth.toString();
+    _volume2.text = app.height.toString();
+    _volume3.text = app.width.toString();
+    _amount.text = app.approxAmount.toString();
+    _weight.text = app.weight.toString();
+    _description.text = app.description;
+    _carType = _listVehicleType.firstWhere((element) => element.id == app.vehicleType.id);
+    _baggageType = _listWorkType.firstWhere((element) => element.id== app.workType.id);
   }
 
   @override
@@ -59,18 +95,6 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
     });
     super.initState();
   }
-
-  DropDownModel _carType = DropDownModel(id: 1, name: "test1");
-  DropDownModel _baggageType = DropDownModel(id: 1, name: "test1");
-  final TextEditingController _volume1 = TextEditingController();
-  final TextEditingController _volume2 = TextEditingController();
-  final TextEditingController _volume3 = TextEditingController();
-  final TextEditingController _date = TextEditingController();
-  final TextEditingController _time = TextEditingController();
-  final TextEditingController _weight = TextEditingController();
-  final TextEditingController _count = TextEditingController();
-  final TextEditingController _description = TextEditingController();
-  bool _isInTown = true;
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +140,9 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                             setState(() {
                               _carType = m!;
                             });
-                            print(m?.id);
                           },
                           data: _listVehicleType,
-                          initialData: _listVehicleType.first,
+                          initialData: _carType,
                         ),
                       if (_listWorkType.isNotEmpty)
                         DropDownButton(
@@ -134,7 +157,7 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                             });
                           },
                           data: _listWorkType,
-                          initialData: _listWorkType.first,
+                          initialData: _baggageType,
                         ),
                       Container(
                         height: getConfigHeight(0.05),
@@ -158,7 +181,7 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                             TextInputForm(
                               titleHeight: getConfigHeight(0.05),
                               titleWidth: getConfigWidth(0.2),
-                              title: "Uzinligi",
+                              title: "Uzunligi",
                               inputHeight: getConfigHeight(0.06),
                               inputWidth: getConfigWidth(0.2),
                               placeholder: "",
@@ -232,11 +255,11 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                             TextInputForm(
                               titleHeight: getConfigHeight(0.05),
                               titleWidth: getConfigWidth(0.35),
-                              title: "Miqdori".toUpperCase(),
+                              title: "Narxi".toUpperCase(),
                               inputHeight: getConfigHeight(0.06),
                               inputWidth: getConfigWidth(0.35),
                               placeholder: "",
-                              controller: _count,
+                              controller: _amount,
                               inputType: TextInputType.number,
                             ),
                           ],
@@ -302,10 +325,10 @@ class _DeliveryRequestPState extends State<DeliveryRequestP> {
                                 width: double.parse(_volume3.text),
                                 height: double.parse(_volume2.text),
                                 depth: double.tryParse(_volume1.text),
-                                approxAmount: double.parse(_count.text),
+                                approxAmount: double.parse(_amount.text),
                                 loadDateTime: "${_date.text.replaceAll("-", ".")} ${_time.text}:00",
                                 receiverPhone: _phone,
-                                directionType: _isInTown ? "INTERURBAN" : "OUTERURBAN");
+                                directionType: _isInTown ? "CITY" : "INTERURBAN");
                             Navigator.push(
                               context,
                               MaterialPageRoute(

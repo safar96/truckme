@@ -50,7 +50,6 @@ class PlaceApiProvider {
   }
 
   Future<String?> getAddressFromLatLng(context, double lat, double lng) async {
-
     String host = 'https://maps.google.com/maps/api/geocode/json';
     final url = '$host?key=$apiKey&language=en&latlng=$lat,$lng';
       var response = await http.get(Uri.parse(url));

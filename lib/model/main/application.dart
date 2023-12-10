@@ -1,4 +1,5 @@
 class Application {
+  int? id;
   int? categoryId;
   int? vehicleTypeId;
   int? workTypeId;
@@ -19,7 +20,9 @@ class Application {
   String? directionType;
 
   Application(
-      {this.categoryId,
+      {
+        this.id,
+        this.categoryId,
         this.vehicleTypeId,
         this.workTypeId,
         this.sourceLatitude,

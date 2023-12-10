@@ -30,8 +30,6 @@ class AuthProvider with ChangeNotifier {
           "password": password,
         }),
       );
-      print(response.body);
-      print(response.statusCode);
       var resBody = json.decode(response.body);
       if (response.statusCode == 200) {
         await addUserSession(
@@ -120,7 +118,6 @@ class AuthProvider with ChangeNotifier {
       print(response.statusCode);
       var resBody = json.decode(response.body);
 
-      if (response.statusCode == 200) {
         await addUserSession(
           "",
           resBody['data']['accessToken']['token'],
@@ -132,8 +129,6 @@ class AuthProvider with ChangeNotifier {
           resBody['data']['refreshToken']['token'],
         );
         return SuccessMessage(Message.Succes, "");
-      }
-      return SuccessMessage(Message.Error, resBody['data']);
     } catch (error) {
       return SuccessMessage(Message.Error, "Connection error");
     }
@@ -349,34 +344,46 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> checkToken() async {
-    try {
-      bool hasExpired = JwtDecoder.isExpired(Global.myUserInfo.token);
-      if (hasExpired) {
-        const url = 'https://api.xpertmedia.uz/auth/v1/refresh';
-        try {
-          final response = await http.post(
-            Uri.parse(url),
-            body: json.encode({"refresh_token": Global.myUserInfo.refresh_token}),
+  Future<bool> checkToken() async {
+    bool hasExpired = JwtDecoder.isExpired(Global.myUserInfo.token);
+    print(Global.myUserInfo.token);
+    if (hasExpired) {
+      const url = '$api/auth/refresh-token';
+      try {
+
+        final response = await http.post(
+          Uri.parse(url),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: json.encode({
+            "refreshToken": Global.myUserInfo.refresh_token,
+          }),
+        );
+        print(response.statusCode);
+        print(response.body);
+        if (response.statusCode == 200) {
+          var resBody = json.decode(response.body);
+          await addUserSession(
+            "",
+            resBody['data']['accessToken']['token'],
+            resBody['data']['refreshToken']['token'],
           );
-          if (response.statusCode == 200) {
-            var resBody = json.decode(response.body);
-            await addUserSession(
-              resBody['data']['user']['id'],
-              resBody['data']['token']['access_token'],
-              resBody['data']['token']['refresh_token'],
-            );
-            Global.myUserInfo = UserInfo.fromJson(
-              resBody['data']['user'],
-              resBody['data']['token']['access_token'],
-              resBody['data']['token']['refresh_token'],
-            );
-          }
-        } catch (error) {
-          rethrow;
+          Global.myUserInfo = UserInfo.fromJson(
+            {},
+            resBody['data']['accessToken']['token'],
+            resBody['data']['refreshToken']['token'],
+          );
+          return true;
+        } else {
+          return false;
         }
+      } catch (error) {
+        return false;
       }
-    } catch (e) {}
+    } else {
+      return true;
+    }
   }
 
   Future<void> addUserSession(String id, String token, String refreshToken) async {

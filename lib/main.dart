@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:truckme/page/auth/login_p.dart';
 import 'package:truckme/page/auth/registration_p.dart';
@@ -53,7 +52,7 @@ class _MyAppState extends State<MyApp> {
   bool _isFirstLogin = true;
 
   Future<void> _checkLoginInfo() async {
-    // final provider = Provider.of<AuthProvider>(context, listen: false);
+    final provider = Provider.of<AuthProvider>(context, listen: false);
     InitDatabase initDatabase = InitDatabase();
     UserSessionTable userSessionTable = UserSessionTable();
     int len = 0;
@@ -62,12 +61,13 @@ class _MyAppState extends State<MyApp> {
     });
     if (len != 0) {
       UserSession userSession = await userSessionTable.retrieveUserSession();
-      if (!JwtDecoder.isExpired(userSession.token)) {
-        Global.myUserInfo = UserInfo.fromJson(
-          {},
-          userSession.token,
-          userSession.refresh_token,
-        );
+      Global.myUserInfo = UserInfo.fromJson(
+        {},
+        userSession.token,
+        userSession.refresh_token,
+      );
+      final checkToken = await provider.checkToken();
+      if (checkToken) {
         _isFirstLogin = false;
       } else {
         await initDatabase.initializedDB().whenComplete(() async {
@@ -120,7 +120,6 @@ class _MyAppState extends State<MyApp> {
                 ? const SplashP()
                 : const MainNew(),
         routes: {
-          // "/first": (BuildContext context) => const FirstPage(),
           "/login": (BuildContext context) => const LoginP(),
           "/registration": (BuildContext context) => const RegistrationP(),
           "/sms": (BuildContext context) => const SmsConfirmP(),

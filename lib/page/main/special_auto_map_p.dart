@@ -4,17 +4,24 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:truckme/core/component/size_config.dart';
+import 'package:truckme/model/main/s_application.dart';
 import 'package:truckme/page/main/request_seccess_p.dart';
 import 'package:truckme/widget/component/card_with_right.dart';
 import 'package:truckme/widget/map/location_search.dart';
 import '../../core/app_data/constants.dart';
 import '../../core/util/map.dart';
+import '../../core/util/util_file.dart';
+import '../../model/auth/success_message.dart';
 import '../../model/card/card_list.dart';
+import '../../provider/request_provider.dart';
 import '../../widget/component/custom_button.dart';
 
 class SpecialAutoMapP extends StatefulWidget {
-  const SpecialAutoMapP({super.key});
+  final SApplication application;
+
+  const SpecialAutoMapP({super.key, required this.application});
 
   @override
   State<SpecialAutoMapP> createState() => _SpecialAutoMapPState();
@@ -50,7 +57,6 @@ class _SpecialAutoMapPState extends State<SpecialAutoMapP> {
     });
     _determinePosition();
   }
-
 
   Future<void> _determinePosition() async {
     setState(() {
@@ -116,6 +122,30 @@ class _SpecialAutoMapPState extends State<SpecialAutoMapP> {
         _isShowMap = false;
       });
     }
+  }
+
+
+  void _sentOrder() async {
+    final provider = Provider.of<RequestProvider>(context, listen: false);
+    final nav = Navigator.of(context);
+    SuccessMessage message = await provider.sentSpecialRequest(widget.application, _firstLocation);
+    if (message.message == Message.Succes) {
+      nav.push(
+        MaterialPageRoute(
+          builder: (context) => RequestSuccessP(
+            from: _searchController.text,
+            to: "",
+            isDelivery: false,
+          ),
+        ),
+      );
+    } else {
+      _getAlert("Xatolik", message.body);
+    }
+  }
+
+  void _getAlert(String title, String body) {
+    alert(context, title, body);
   }
 
   @override
@@ -225,8 +255,7 @@ class _SpecialAutoMapPState extends State<SpecialAutoMapP> {
                                 child: Text(
                                   "Manzilni tanlang",
                                   style: TextStyle(
-                                    color:
-                                    Theme.of(context).textTheme.titleSmall?.color,
+                                    color: Theme.of(context).textTheme.titleSmall?.color,
                                     fontSize: 24,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -288,8 +317,8 @@ class _SpecialAutoMapPState extends State<SpecialAutoMapP> {
                                   imageUrl: _selectedPayment.card_type == "Naqt"
                                       ? "assets/images/ic_cash.png"
                                       : _selectedPayment.card_type == "humo"
-                                      ? "assets/images/humo.png"
-                                      : "assets/images/uzcard.png",
+                                          ? "assets/images/humo.png"
+                                          : "assets/images/uzcard.png",
                                   title: _selectedPayment.account,
                                   onTap: () {
                                     setState(() {
@@ -306,18 +335,7 @@ class _SpecialAutoMapPState extends State<SpecialAutoMapP> {
                                     name: "Tastiqlash",
                                     textSize: 18,
                                     textColor: Constants.backgroundColor,
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => RequestSuccessP(
-                                            from: _searchController.text,
-                                            to: "",
-                                            isDelivery: false,
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                    onTap: _sentOrder,
                                     colorButton: Constants.primaryColor,
                                   ),
                                 ),
@@ -368,8 +386,8 @@ class _SpecialAutoMapPState extends State<SpecialAutoMapP> {
                                             imageUrl: _cardList[index].card_type == "Naqt"
                                                 ? "assets/images/ic_cash.png"
                                                 : _cardList[index].card_type == "humo"
-                                                ? "assets/images/humo.png"
-                                                : "assets/images/uzcard.png",
+                                                    ? "assets/images/humo.png"
+                                                    : "assets/images/uzcard.png",
                                             title: _cardList[index].account,
                                             onTap: () {
                                               setState(() {
@@ -392,7 +410,6 @@ class _SpecialAutoMapPState extends State<SpecialAutoMapP> {
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
