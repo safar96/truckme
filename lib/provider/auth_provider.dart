@@ -161,6 +161,49 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+
+  Future<bool> checkToken() async {
+    bool hasExpired = JwtDecoder.isExpired(Global.myUserInfo.token);
+    print(Global.myUserInfo.token);
+    if (hasExpired) {
+      const url = '$api/auth/refresh-token';
+      try {
+
+        final response = await http.post(
+          Uri.parse(url),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: json.encode({
+            "refreshToken": Global.myUserInfo.refresh_token,
+          }),
+        );
+        print(response.statusCode);
+        print(response.body);
+        if (response.statusCode == 200) {
+          var resBody = json.decode(response.body);
+          await addUserSession(
+            "",
+            resBody['data']['accessToken']['token'],
+            resBody['data']['refreshToken']['token'],
+          );
+          Global.myUserInfo = UserInfo.fromJson(
+            {},
+            resBody['data']['accessToken']['token'],
+            resBody['data']['refreshToken']['token'],
+          );
+          return true;
+        } else {
+          return false;
+        }
+      } catch (error) {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
   Future<bool> logOut() async {
     InitDatabase initDatabase = InitDatabase();
     UserSessionTable userSessionTable = UserSessionTable();
@@ -344,47 +387,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> checkToken() async {
-    bool hasExpired = JwtDecoder.isExpired(Global.myUserInfo.token);
-    print(Global.myUserInfo.token);
-    if (hasExpired) {
-      const url = '$api/auth/refresh-token';
-      try {
 
-        final response = await http.post(
-          Uri.parse(url),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: json.encode({
-            "refreshToken": Global.myUserInfo.refresh_token,
-          }),
-        );
-        print(response.statusCode);
-        print(response.body);
-        if (response.statusCode == 200) {
-          var resBody = json.decode(response.body);
-          await addUserSession(
-            "",
-            resBody['data']['accessToken']['token'],
-            resBody['data']['refreshToken']['token'],
-          );
-          Global.myUserInfo = UserInfo.fromJson(
-            {},
-            resBody['data']['accessToken']['token'],
-            resBody['data']['refreshToken']['token'],
-          );
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        return false;
-      }
-    } else {
-      return true;
-    }
-  }
 
   Future<void> addUserSession(String id, String token, String refreshToken) async {
     InitDatabase initDatabase = InitDatabase();

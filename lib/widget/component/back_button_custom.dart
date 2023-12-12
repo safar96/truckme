@@ -29,7 +29,7 @@ class BackButtonCustom extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 6.0),
+        padding: const EdgeInsets.only(right: 6.0),
         child: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
