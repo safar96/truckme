@@ -37,6 +37,7 @@ class _TravelHistoryPState extends State<TravelHistoryP> {
     SizeConfig.init(context);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: DefaultTabController(
         length: 4,
         child: Scaffold(
