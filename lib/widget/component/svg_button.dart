@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as hh;
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SvgButton extends StatelessWidget {
   final String imageUrl;
@@ -23,15 +23,8 @@ class SvgButton extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          image: DecorationImage(
-            image: hh.Svg(
-              imageUrl,
-              // size: Size(width, height),
-            ),
-          ),
-        ),
+        color: Colors.transparent,
+        child: SvgPicture.asset(imageUrl),
       ),
     );
   }

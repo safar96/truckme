@@ -137,13 +137,13 @@ class _MainNewState extends State<MainNew> {
                     return Padding(
                       padding: const EdgeInsets.only(top: 15.0),
                       child: SizedBox(
-                        height: _showId == list[index].id ? getConfigHeight(0.7) : getConfigHeight(0.2),
+                        height: _showId == list[index].id ? getConfigHeight(0.62) : getConfigHeight(0.2),
                         width: getConfigWidth(0.9),
                         child: Stack(
                           alignment: Alignment.topCenter,
                           children: [
                             Container(
-                              height: _showId == list[index].id ? getConfigHeight(0.68) : getConfigHeight(0.18),
+                              height: _showId == list[index].id ? getConfigHeight(0.58) : getConfigHeight(0.17),
                               width: getConfigWidth(0.9),
                               alignment: Alignment.topCenter,
                               decoration: const BoxDecoration(
@@ -170,21 +170,21 @@ class _MainNewState extends State<MainNew> {
                                           "№${list[index].id}",
                                           style: TextStyle(
                                             color: Constants.unSelectColor,
-                                            fontSize: 18,
+                                            fontSize: 16,
                                           ),
                                         ),
                                         Text(
                                           "5 soat",
                                           style: TextStyle(
                                             color: Constants.unSelectColor,
-                                            fontSize: 18,
+                                            fontSize: 16,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
                                   SizedBox(
-                                    height: getConfigHeight(0.12),
+                                    height: getConfigHeight(0.10),
                                     width: getConfigWidth(0.8),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,40 +200,38 @@ class _MainNewState extends State<MainNew> {
                                         //   ),
                                         // ),
                                         SizedBox(
-                                          height: getConfigHeight(0.12),
+                                          height: getConfigHeight(0.1),
                                           // width: getConfigWidth(0.25),
                                           width: getConfigWidth(0.45),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 8.0),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  list[index].vehicleCategory.categoryNameCyril,
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    color: Constants.textBlackColor,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                list[index].vehicleCategory.categoryNameCyril,
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                  color: Constants.textBlackColor,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                Text(
-                                                  list[index].workType.vehicleTypeNameCyril,
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    color: Constants.textBlackColor,
-                                                    fontSize: 18,
-                                                  ),
+                                              ),
+                                              Text(
+                                                list[index].workType.vehicleTypeNameCyril,
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                  color: Constants.textBlackColor,
+                                                  fontSize: 16,
                                                 ),
-                                                Text(
-                                                  "${list[index].weight} kg",
-                                                  style: TextStyle(
-                                                    color: Constants.textBlackColor,
-                                                    fontSize: 18,
-                                                  ),
+                                              ),
+                                              Text(
+                                                "${list[index].weight} kg",
+                                                style: TextStyle(
+                                                  color: Constants.textBlackColor,
+                                                  fontSize: 16,
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                         Container(
@@ -244,7 +242,7 @@ class _MainNewState extends State<MainNew> {
                                             "${list[index].approxAmount} so’m",
                                             style: TextStyle(
                                               color: Constants.textBlackColor,
-                                              fontSize: 20,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -262,13 +260,13 @@ class _MainNewState extends State<MainNew> {
                                             "Manzil",
                                             style: TextStyle(
                                               color: Constants.textBlackColor,
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
                                         SizedBox(
-                                          height: getConfigHeight(0.12),
+                                          height: getConfigHeight(0.08),
                                           width: getConfigWidth(0.8),
                                           child: Row(
                                             children: [
@@ -283,7 +281,7 @@ class _MainNewState extends State<MainNew> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: getConfigHeight(0.12),
+                                                height: getConfigHeight(0.08),
                                                 width: getConfigWidth(0.65),
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -293,14 +291,14 @@ class _MainNewState extends State<MainNew> {
                                                       snapshot.data?.from ?? "",
                                                       style: TextStyle(
                                                         color: Constants.textBlackColor,
-                                                        fontSize: 18,
+                                                        fontSize: 16,
                                                       ),
                                                     ),
                                                     Text(
                                                       snapshot.data?.to ?? "",
                                                       style: TextStyle(
                                                         color: Constants.textBlackColor,
-                                                        fontSize: 18,
+                                                        fontSize: 16,
                                                       ),
                                                     ),
                                                   ],
@@ -318,7 +316,7 @@ class _MainNewState extends State<MainNew> {
                                           color: Constants.unSelectColor,
                                         ),
                                         SizedBox(
-                                          height: getConfigHeight(0.07),
+                                          height: getConfigHeight(0.05),
                                           width: getConfigWidth(0.8),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -327,14 +325,14 @@ class _MainNewState extends State<MainNew> {
                                                 "Masofa",
                                                 style: TextStyle(
                                                   color: Constants.textBlackColor,
-                                                  fontSize: 18,
+                                                  fontSize: 16,
                                                 ),
                                               ),
                                               Text(
                                                 "${list[index].distance} km",
                                                 style: TextStyle(
                                                   color: Constants.textBlackColor,
-                                                  fontSize: 18,
+                                                  fontSize: 16,
                                                 ),
                                               ),
                                             ],
@@ -346,7 +344,7 @@ class _MainNewState extends State<MainNew> {
                                           color: Constants.unSelectColor,
                                         ),
                                         SizedBox(
-                                          height: getConfigHeight(0.07),
+                                          height: getConfigHeight(0.05),
                                           width: getConfigWidth(0.8),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -355,14 +353,14 @@ class _MainNewState extends State<MainNew> {
                                                 "To’lov turi",
                                                 style: TextStyle(
                                                   color: Constants.textBlackColor,
-                                                  fontSize: 18,
+                                                  fontSize: 16,
                                                 ),
                                               ),
                                               Text(
                                                 "Naqt",
                                                 style: TextStyle(
                                                   color: Constants.textBlackColor,
-                                                  fontSize: 18,
+                                                  fontSize: 16,
                                                 ),
                                               ),
                                             ],
@@ -374,7 +372,7 @@ class _MainNewState extends State<MainNew> {
                                           color: Constants.unSelectColor,
                                         ),
                                         SizedBox(
-                                          height: getConfigHeight(0.07),
+                                          height: getConfigHeight(0.055),
                                           width: getConfigWidth(0.8),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -383,14 +381,14 @@ class _MainNewState extends State<MainNew> {
                                                 "Yuklash sanasi",
                                                 style: TextStyle(
                                                   color: Constants.textBlackColor,
-                                                  fontSize: 18,
+                                                  fontSize: 16,
                                                 ),
                                               ),
                                               Text(
                                                 "10.10.2023 15:45",
                                                 style: TextStyle(
                                                   color: Constants.textBlackColor,
-                                                  fontSize: 18,
+                                                  fontSize: 16,
                                                 ),
                                               ),
                                             ],
@@ -473,11 +471,11 @@ class _MainNewState extends State<MainNew> {
                             Column(
                               children: [
                                 SizedBox(
-                                  height: _showId == list[index].id ? getConfigHeight(0.65) : getConfigHeight(0.15),
+                                  height: _showId == list[index].id ? getConfigHeight(0.56) : getConfigHeight(0.15),
                                 ),
                                 IconButtonCustom(
-                                  height: getConfigHeight(0.05),
-                                  width: getConfigWidth(0.2),
+                                  height: getConfigHeight(0.04),
+                                  width: getConfigWidth(0.15),
                                   url: _showId == list[index].id
                                       ? "assets/images/ic_arrow_top.png"
                                       : "assets/images/ic_arrow.png",
